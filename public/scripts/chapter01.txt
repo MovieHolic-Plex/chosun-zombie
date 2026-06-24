@@ -1,0 +1,368 @@
+label scene_011:
+    scene bg abandoned_inn
+    show char 이현 serious
+    show char 소녀 anxious
+    "이현과 소녀는 산 아래 버려진 주막에 도착했다."
+    "문짝은 반쯤 떨어졌고, 부엌에는 식은 죽 냄새가 맴돈다."
+    이현 serious "바람을 피하기엔 이곳만 한 곳이 없겠군."
+    소녀 anxious "아저씨... 여기 너무 춥고 캄캄해요..."
+    jump scene_012
+
+label scene_012:
+    scene bg abandoned_inn
+    "주막의 마루를 밟았을 때, 마루 밑바닥에서 썩은 손이 튀어 올랐다!"
+    show effect shake
+    이현 angry "네놈은 뭐냐! 역귀더냐!"
+    "그것은 역귀가 아니었다. 흙먼지를 뒤집어쓴 채 숨어 있던 노인이었다."
+    "노인" "살려줍시요... 나으리... 제발 살려줍시요..."
+    menu:
+        "마루 밑의 노인을 구출한다":
+            $ humanity += 1
+            jump scene_012_save
+        "위험하니 내버려두고 지나친다":
+            $ suspicion += 1
+            jump scene_012_leave
+
+label scene_012_save:
+    scene bg abandoned_inn
+    "이현은 칼을 거두고 노인의 손을 잡아 끌어올렸다."
+    "노인은 고맙다며 연신 머리를 조아리고는 어둠 속으로 도망쳤다."
+    jump scene_013
+
+label scene_012_leave:
+    scene bg abandoned_inn
+    이현 serious "지체하지 말고 방으로 들어가자."
+    "노인은 슬픈 신음을 흘리며 마루 밑 어둠 속으로 다시 움츠러들었다."
+    jump scene_013
+
+label scene_013:
+    scene bg abandoned_inn
+    "주막 뒤 헛간 쪽에서 기괴한 소리와 함께 낡은 패랭이를 쓴 사내가 헛간에서 튀어나왔다."
+    "장덕팔" "으, 으악! 역귀인가! 오지 마라!"
+    show char 장덕팔 neutral
+    이현 serious "조용히 하거라. 산길의 말잡이 장덕팔이 아니더냐?"
+    "장덕팔" "이, 이현 나으리? 아, 살았구나! 그런데... 저 애는 누굽니까? 몰골이 흉흉한 게 역귀의 제물이 아닙니까?"
+    menu:
+        "덕팔을 차분하게 설득한다":
+            $ trust_girl += 1
+            jump scene_013_talk
+        "무기로 덕팔을 위협하여 입을 닫게 한다":
+            $ suspicion += 1
+            jump scene_013_threat
+
+label scene_013_talk:
+    scene bg abandoned_inn
+    이현 neutral "눈길에서 길을 잃은 불쌍한 아이다. 소란 피우지 마라."
+    "장덕팔" "하이고, 나으리가 그렇다면 그런 거겠지요만... 여전히 찝찝하구만요."
+    jump scene_014
+
+label scene_013_threat:
+    scene bg abandoned_inn
+    이현 angry "말을 삼가라. 한 마디만 더 쫑알거리면 이 산길에 묻어버리겠다."
+    "장덕팔" "히익! 알겠습니다요! 입 딱 다물겠습니다!"
+    jump scene_014
+
+label scene_014:
+    scene bg abandoned_inn
+    "주막 부엌 뒤주에서 겨우 찾아낸 누룽지 죽 한 그릇이 상 위에 놓였다."
+    "주막에 남은 식량은 이것이 전부다."
+    menu:
+        "소녀에게 죽을 전부 양보한다":
+            $ trust_girl += 1
+            $ humanity += 1
+            jump scene_014_girl
+        "세 사람이 공평하게 나누어 먹는다":
+            $ food -= 1
+            jump scene_014_share
+        "주인공인 이현이 혼자 먹는다":
+            $ suspicion += 1
+            jump scene_014_self
+
+label scene_014_girl:
+    scene bg abandoned_inn
+    이현 neutral "너는 아직 어리니 어서 먹어두거라."
+    show char 소녀 neutral
+    소녀 neutral "고맙습니다, 아저씨... 정말 맛있어요."
+    jump scene_015
+
+label scene_014_share:
+    scene bg abandoned_inn
+    "셋은 말없이 누룽지 죽을 조금씩 나누어 먹으며 허기를 달랬다."
+    jump scene_015
+
+label scene_014_self:
+    scene bg abandoned_inn
+    이현 serious "길잡이인 내가 힘을 써야 모두가 산다. 불만 갖지 마라."
+    "장덕팔과 소녀는 침을 삼키며 굳은 표정으로 지켜보았다."
+    jump scene_015
+
+label scene_015:
+    scene bg abandoned_inn
+    "밤이 깊어지자, 소녀의 몸이 불덩이처럼 뜨거워지기 시작했다."
+    show char 소녀 anxious
+    소녀 anxious "흐윽... 아파요... 온몸이 불타는 것 같아요..."
+    "소녀의 열이 오를수록, 주막 울타리 너머에서 스산한 역귀들의 울부짖음이 가까워졌다."
+    menu:
+        "물수건을 짜서 소녀의 이마를 닦아주며 간호한다":
+            $ trust_girl += 1
+            jump scene_015_cure
+        "혹시 모를 폭주를 대비해 소녀를 밧줄로 묶어둔다":
+            $ suspicion += 1
+            jump scene_015_bind
+
+label scene_015_cure:
+    scene bg abandoned_inn
+    이현 sad "조금만 버티거라. 곧 열이 내릴 것이다."
+    "정성스런 간호에 소녀의 호흡이 미세하게 안정을 되찾았다."
+    jump scene_016
+
+label scene_015_bind:
+    scene bg abandoned_inn
+    이현 serious "역귀와 공명하여 변할지도 모른다. 묶어두는 편이 안전하다."
+    소녀 anxious "아저씨... 무서워요... 아픈데 묶지 마세요..."
+    jump scene_016
+
+label scene_016:
+    scene bg abandoned_inn
+    show char 역귀 neutral
+    "쿵! 주막 마당의 대문이 부서지며 역귀떼가 주막 안으로 들이닥쳤다!"
+    show effect shake
+    "창호지 너머로 기괴하게 꺾인 손 그림자들이 방 문을 긁어대기 시작한다."
+    이현 angry "덕팔이 너는 뒤를 지켜라. 역귀들이 방 안까지 들어오게 둘 수 없다!"
+    "장덕팔" "아이고 나으리! 나 살려! 주막 문이 부서집니다요!"
+    jump scene_017
+
+label scene_017:
+    scene bg abandoned_inn
+    show char 역귀 alert
+    "역귀들이 방문 창호지를 찢고 마침내 방 안으로 머리를 들이밀었다!"
+    show effect flash
+    "그 피비린내 나는 순간, 신열에 차 있던 소녀가 기묘한 노랫가락을 흥얼거렸다."
+    "소녀의 입에서 노래가 흘러나오자, 역귀들의 행동이 일시에 우뚝 멈췄다."
+    "역귀들은 고개를 갸웃거리더니, 이내 어둠 속으로 쓸쓸히 물러갔다."
+    hide char 역귀
+    이현 anxious "괴물들이... 물러갔다고? 저 노래는 대체 무엇이냐?"
+    $ truth += 1
+    $ plague_resonance += 1
+    jump scene_018
+
+label scene_018:
+    scene bg abandoned_inn
+    "폭풍 같은 습격이 지나간 새벽녘, 장덕팔이 주막 마당에서 떨어뜨린 물건을 주워왔다."
+    "그것은 궁궐 내의원이나 의금부 고위직들만 사용하는 붉은 끈 장식이 달린 호패 주머니였다."
+    "장덕팔" "나으리, 이 장식... 예전에 한양의 검은 갓을 쓴 나리들이 들고 다니는 걸 보았습니다요."
+    이현 anxious "비밀 추적자들이 벌써 이 근방까지 도달했다는 뜻이군."
+    $ authority_alert += 1
+    jump scene_019
+
+label scene_019:
+    scene bg abandoned_inn
+    "화르륵! 갑자기 주막 바깥 지붕에서부터 맹렬한 불길이 피어올랐다!"
+    show effect flash
+    "누군가 밖에서 역귀들과 주막 일행을 한꺼번에 태워 죽이려고 불을 지른 것이 분명했다."
+    "불길이 방 안까지 매섭게 들이닥친다."
+    menu:
+        "소녀 서하를 먼저 품에 안고 탈출한다":
+            $ trust_girl += 1
+            jump scene_019_girl
+        "부엌의 남은 식량과 약재를 먼저 챙긴다":
+            $ food += 1
+            $ medicine += 1
+            jump scene_019_item
+
+label scene_019_girl:
+    scene bg abandoned_inn
+    이현 angry "서하야, 내 손을 꽉 잡거라! 불길을 뚫고 나간다!"
+    "이현은 물자를 포기하고 소녀를 품에 안은 채 불타는 주막을 뛰쳐나왔다."
+    jump scene_020
+
+label scene_019_item:
+    scene bg abandoned_inn
+    이현 serious "식량이 없으면 굶어 죽는다. 보따리를 챙겨라!"
+    "물자를 챙기느라 소녀가 불길 속에서 연기를 들이마셔 연신 기침을 해댔다."
+    jump scene_020
+
+label scene_020:
+    scene bg abandoned_inn
+    "활활 타오르는 주막을 뒤로하고, 세 사람은 차가운 새벽 공기 속으로 탈출했다."
+    show char 장덕팔 neutral
+    "장덕팔" "에고고... 주막이 완전히 재가 되어버렸구만요. 이제 어디로 가야 합니까?"
+    이현 serious "이곳 산길은 더 이상 안전하지 않다. 아래에 있는 굶주린 읍성으로 내려가자."
+    "장덕팔" "읍성으로요? 거기도 역귀 때문에 난리일 텐데요... 그래도 따라가겠습니다요."
+    "장덕팔이 마차를 끌고 이현 일행의 온전한 동료가 되었다."
+    jump scene_021
+
+label scene_021:
+    scene bg town_market
+    "2장: 굶주린 읍성"
+    "산길을 내려온 셋은 굳게 닫힌 읍성 성문 앞에 다다랐다."
+    "성문에는 '역병 발생으로 출입을 금한다'는 붉은 방이 붙어 있고, 안에서는 절규가 터져 나온다."
+    menu:
+        "성벽의 부서진 배수로를 찾아 읍성 내부로 몰래 잠입한다":
+            $ humanity += 1
+            jump scene_021_in
+        "성 내부를 피하고 성벽 외곽의 야산 길로 우회한다":
+            $ suspicion += 1
+            jump scene_021_bypass
+
+label scene_021_in:
+    scene bg town_market
+    이현 serious "성 안의 물자나 의원을 찾아야 한다. 무너진 배수로를 통해 들어간다."
+    jump scene_022
+
+label scene_021_bypass:
+    scene bg town_market
+    이현 serious "성 안은 감염자들로 지옥일 것이다. 외곽 산길로 돌아서 가자."
+    jump scene_022
+
+label scene_022:
+    scene bg town_market
+    "읍성 내부는 아수라장이었다. 쌀가마니는 군데군데 찢겨 바닥에 흩뿌려져 있고..."
+    "백성들은 피눈물을 흘리며 굶주림에 허덕이고 있었다."
+    menu:
+        "피난민들에게 남은 식량을 일부 나누어준다":
+            $ humanity += 1
+            $ food -= 1
+            jump scene_022_give
+        "매정하게 그들을 외면하고 식량을 지킨다":
+            $ suspicion += 1
+            jump scene_022_keep
+
+label scene_022_give:
+    scene bg town_market
+    "이현은 피난민 아이에게 마른 식량 조각을 건넸다."
+    "아이" "고맙습니다... 정말 고맙습니다 나으리..."
+    jump scene_023
+
+label scene_022_keep:
+    scene bg town_market
+    이현 serious "동정은 사치다. 우리가 굶주려 죽을 수는 없다."
+    jump scene_023
+
+label scene_023:
+    scene bg town_market
+    "골목길 모퉁이에서, 한 여인이 어린 아들의 팔목을 감싸 쥔 채 포졸들을 피해 숨어들었다."
+    show char 홍연 neutral
+    "홍연" "제발... 제발 저희 아들을 포졸들에게 고하지 말아 주십시오. 물린 게 아니라 긁힌 것뿐입니다!"
+    "홍연의 아들 점돌의 안색은 창백했고, 팔목에는 이빨 자국이 찍혀 있었다."
+    menu:
+        "여인과 아들을 포졸들의 눈을 피해 마차에 숨겨준다":
+            $ humanity += 1
+            $ trust_girl += 1
+            jump scene_023_save
+        "역귀로 변할 위험이 있으니 관군 포졸들에게 신고한다":
+            $ suspicion += 1
+            jump scene_023_report
+
+label scene_023_save:
+    scene bg town_market
+    이현 neutral "덕팔아, 마차 짐칸의 가마적을 걷어 올리고 이들을 태우거라."
+    "홍연" "하늘 같으신 은혜 평생 잊지 않겠습니다, 나으리..."
+    jump scene_024
+
+label scene_023_report:
+    scene bg town_market
+    이현 serious "역귀로 변할 위험이 있다. 저들을 관가에 알리자."
+    "홍연" "아 안 됩니다! 점돌아! 내 새끼 데려가지 마라!"
+    "울부짖는 홍연을 뒤로하고 관군 포졸들이 점돌을 결박해 끌고 갔다."
+    jump scene_024
+
+label scene_024:
+    scene bg town_market
+    "성내 광장 한편에서, 관군 장수가 감염 의심자들을 목조 창고에 가두고 기름을 끼얹기 시작했다."
+    "관군 장수" "역병을 막으라는 현감 사또의 명령이다! 모조리 불태워라!"
+    "창고 안 피난민들의 처절한 비명소리가 읍성을 뒤흔들었다."
+    menu:
+        "관군들을 가로막고 창고 문을 부숴 피난민들을 구출한다":
+            $ humanity += 1
+            jump scene_024_rescue
+        "싸움에 휘말리지 않도록 침묵하며 지나친다":
+            $ suspicion += 1
+            jump scene_024_ignore
+
+label scene_024_rescue:
+    scene bg town_market
+    show effect flash
+    이현 angry "포졸 놈들이 미쳤구나! 죄 없는 백성들을 산 채로 태우다니!"
+    "이현은 칼을 뽑아 관군들의 저지를 뚫고 목조 창고의 빗장을 부쉈다."
+    jump scene_025
+
+label scene_024_ignore:
+    scene bg town_market
+    이현 serious "관군의 공무다. 우리가 끼어들면 추적의 단서만 제공할 뿐이다."
+    "창고 안은 이내 붉은 불길에 휩싸여 비명마저 타들어 갔다."
+    jump scene_025
+
+label scene_025:
+    scene bg town_market
+    "관군의 소란을 피해 들어간 관아 옥사 터 구석방."
+    "그곳에는 기괴하게 뒤틀린 역귀 사체들이 형틀에 묶인 채 피범벅이 되어 있었다."
+    "시체들의 흉부와 머리는 예리한 칼로 해부된 흔적이 뚜렷했다."
+    이현 serious "역귀의 시신을 고의로 해부한 흔적이로군. 일반 의원의 짓이 아니다."
+    jump scene_026
+
+label scene_026:
+    scene bg town_market
+    "어둠 속에서 피 묻은 가죽 앞치마를 두르고 거대한 칼을 든 사내가 나타났다."
+    show char 강초석 neutral
+    "강초석" "누구냐. 관가의 끄나풀이냐? 아니면 시체 냄새를 맡고 온 역귀더냐?"
+    이현 serious "오작인이로군. 네가 시체들을 다룬 것이냐?"
+    "강초석" "그렇소. 내 평생 온갖 시체를 다 만져봤지만, 이 역귀란 것들은 피가 썩은 채 심장이 뛰지 않아도 움직이더군. 이건 귀신 장난이 오작인의 것이 아니라, 사람의 약물 장난이오."
+    이현 anxious "약물 장난...? 내의원의 짓이란 말이냐?"
+    $ truth += 1
+    "오작인 강초석이 진실의 실마리를 알려주며 동료로 합류했다."
+    jump scene_027
+
+label scene_027:
+    scene bg town_market
+    "장터의 루각 아래에서, 낡은 신복을 걸친 무당이 미친 듯이 징을 울리며 굿판을 벌이고 있었다."
+    show char 월향 neutral
+    "월향" "어허허! 썩은 몸뚱이에 원한이 깃들었구나! 원을 풀지 못하면 조선 팔도가 피로 물들리라!"
+    "무당이 징을 칠 때마다 신기하게도 주변에 웅크리고 있던 역귀들이 주춤거렸다."
+    menu:
+        "무당 월향의 굿판을 도와 백성들의 대피를 유도한다":
+            $ humanity += 1
+            $ truth += 1
+            jump scene_027_help
+        "미친 무당의 사기극이라 여겨 무시하고 지나친다":
+            $ suspicion += 1
+            jump scene_027_ignore
+
+label scene_027_help:
+    scene bg town_market
+    이현 serious "만신의 말이 허황되지 않군. 백성들을 동쪽 성문으로 피신시켜라!"
+    jump scene_028
+
+label scene_027_ignore:
+    scene bg town_market
+    이현 serious "시국을 틈탄 잡신 장난일 뿐이다. 얼른 가자."
+    jump scene_028
+
+label scene_028:
+    scene bg town_market
+    show char 역귀 alert
+    "쾅! 성 안의 관아 창고들이 무너지며 대규모 역귀 무리가 쏟아져 들어왔다!"
+    show effect shake
+    "성벽 곳곳이 붉은 불길에 타오르며 읍성 전체가 불지옥으로 변해간다."
+    이현 wounded "성내가 무너지고 있다! 서하야, 내 뒤에 꼭 붙어 있거라!"
+    show char 소녀 anxious
+    소녀 anxious "아저씨! 사방이 온통 불하고 괴물들이에요! 무서워요!"
+    jump scene_029
+
+label scene_029:
+    scene bg town_market
+    "무너지는 기와지붕과 들끓는 역귀떼를 피해 피난민들이 성문으로 필사적으로 내달린다."
+    "남은 것은 처절한 비명과 검은 연기뿐이다."
+    이현 wounded "성문이 역귀들로 꽉 막혔군. 초석아, 저 무너진 목책 너머 개구멍을 뚫어라!"
+    "강초석" "길을 비켜라! 내 몸으로 빗장을 밀어내겠소!"
+    hide char 역귀
+    jump scene_030
+
+label scene_030:
+    scene bg town_market
+    "간신히 불타는 읍성을 탈출한 일행은 어둑한 계곡 삼거리 언덕에 멈춰 섰다."
+    "뒤돌아본 읍성은 검은 연기와 기괴한 포효 속에 완전히 잠겨 있었다."
+    이현 serious "이곳도 끝이군. 다음 산골에 있는 사찰인 '산사'로 향한다. 그곳에 역병을 피할 단서가 있을 것이다."
+    "소녀 서하가 이현의 소맷자락을 꼭 쥔 채 조용히 고개를 끄덕였다."
+    "다음 씬과 챕터는 정식 릴리즈에서 오픈됩니다. 플레이해주셔서 감사합니다."
+    jump scene_030
