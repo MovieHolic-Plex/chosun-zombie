@@ -490,7 +490,16 @@ export default function App() {
   };
 
   const activeCommands = scriptLabels[currentLabel] || [];
-  const currentCommand = activeCommands[currentIndex] || null;
+  const isAtLabelEnd = gameState === 'playing' && activeCommands.length > 0 && currentIndex >= activeCommands.length;
+  const demoEndCommand: ScenarioCommand | null = isAtLabelEnd
+    ? {
+        type: 'narration',
+        rawLine: 'demo end',
+        lineNum: 0,
+        text: '어둠 속에서 산사의 종이 세 번 울렸다.'
+      }
+    : null;
+  const currentCommand = activeCommands[currentIndex] || demoEndCommand;
 
   // Find the last dialogue/narration to display behind the menu options
   const displayCommand = currentCommand?.type === 'menu'

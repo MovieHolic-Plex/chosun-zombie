@@ -1,3 +1,4 @@
+# SEQUENCE C1 Abandoned Inn Siege: shelter -> suspicion -> fever -> song stops the dead -> hunter proof
 label scene_011:
     scene bg abandoned_inn with fade
     show char 이현 serious at left with dissolve
@@ -10,7 +11,6 @@ label scene_011:
     jump scene_012
 
 label scene_012:
-    scene bg abandoned_inn with dissolve
     show char 이현 alert at left with dissolve
     show char 소녀 panic at right with dissolve
     "마루를 밟는 순간, 판자 틈 아래에서 검은 손이 튀어 올랐다."
@@ -46,7 +46,6 @@ label scene_012_leave:
     jump scene_013
 
 label scene_013:
-    scene bg abandoned_inn with dissolve
     show char 이현 serious at left with dissolve
     show char 소녀 flinch at right with dissolve
     "헛간 쪽에서 나무통이 굴러 떨어졌다."
@@ -82,7 +81,6 @@ label scene_013_threat:
     jump scene_014
 
 label scene_014:
-    scene bg abandoned_inn with dissolve
     show char 이현 serious at left with dissolve
     show char 소녀 numb at right with dissolve
     show char 장덕팔 wary at center with dissolve
@@ -122,7 +120,6 @@ label scene_014_self:
     jump scene_015
 
 label scene_015:
-    scene bg abandoned_inn with dissolve
     show char 이현 anxious at left with dissolve
     show char 소녀 panic at right with dissolve
     "밤이 깊어지자 서하의 몸이 불덩이처럼 달아올랐다."
@@ -154,7 +151,6 @@ label scene_015_bind:
     jump scene_016
 
 label scene_016:
-    scene bg abandoned_inn with dissolve
     show char 이현 alert at left with dissolve
     show char 소녀 panic at right with dissolve
     show char 장덕팔 startled at center with dissolve
@@ -168,7 +164,6 @@ label scene_016:
     jump scene_017
 
 label scene_017:
-    scene bg abandoned_inn with dissolve
     show char 역귀 alert at center with dissolve
     show char 소녀 trance at right with dissolve
     "창호지가 찢어지고, 역귀의 얼굴이 방 안으로 들이밀렸다."
@@ -185,19 +180,18 @@ label scene_017:
     jump scene_018
 
 label scene_018:
-    scene bg abandoned_inn with dissolve
     show char 이현 anxious at left with dissolve
     show char 장덕팔 wary at center with dissolve
     show char 소녀 numb at right with dissolve
     "새벽녘, 장덕팔이 마당 눈 속에서 붉은 끈 장식이 달린 호패 주머니를 주워왔다."
     "장덕팔" wary "이건 장돌뱅이 물건이 아닙니다. 한양 나리들 허리춤에서나 보던 겁니다요."
     이현 anxious "추적자가 주막까지 왔다는 뜻이다."
-    "서하는 호패를 보자마자 손목을 감쌌다."
+    "서하는 호패를 보자마자 손목을 감쌌다. 낙인이 먼저 기억한 표식이었다."
     $ authority_alert += 1
     jump scene_019
 
+# SEQUENCE C2 Burning Inn Escape: oil smoke -> child-or-supplies choice -> party formed by fire
 label scene_019:
-    scene bg abandoned_inn with fade
     show char 이현 alert at left with dissolve
     show char 소녀 panic at right with dissolve
     show char 장덕팔 startled at center with dissolve
@@ -229,17 +223,17 @@ label scene_019_item:
     jump scene_020
 
 label scene_020:
-    scene bg abandoned_inn with fade
     show char 이현 wounded at left with dissolve
     show char 소녀 soft at right with dissolve
     show char 장덕팔 loyal at center with dissolve
-    "세 사람은 불타는 주막을 등지고 눈밭에 쓰러졌다."
+    "세 사람은 불타는 주막을 등지고 눈밭에 쓰러졌다. 뒤에서는 추적자의 불빛과 역귀의 울음이 같은 방향으로 번졌다."
     "장덕팔" loyal "마차는 아직 굴러갑니다. 바퀴 하나가 비명을 질러서 그렇지."
     이현 wounded "읍성으로 내려간다. 의약과 식량이 필요하다."
     "장덕팔" loyal "나으리 혼자라면 말렸겠지만... 아이가 있으니 갑시다."
     "그날부터 장덕팔은 도망자가 아니라, 일행이 되었다."
     jump scene_021
 
+# SEQUENCE C3 Market Moral Collapse: sealed gate -> famine triage -> official cruelty -> autopsy proof -> sound ritual
 label scene_021:
     scene bg town_market with fade
     show char 이현 serious at left with dissolve
@@ -247,12 +241,12 @@ label scene_021:
     show char 장덕팔 wary at center with dissolve
     "굶주린 읍성의 성문은 굳게 닫혀 있었다."
     "붉은 방에는 '출입 금지'가 아니라 '살아남은 자도 들이지 말라'는 뜻이 적혀 있었다."
-    "성 안쪽에서는 사람의 비명과 짐승의 울음이 섞여 터졌다."
+    "성 안쪽에서는 사람의 비명과 짐승의 울음이 섞여 터졌다. 이곳은 피난처가 아니라, 살아 있는 자를 분류하는 도마였다."
     menu:
         "무너진 배수로로 읍성 안에 잠입한다":
             $ humanity += 1
             jump scene_021_in
-        "성 안을 피해 외곽 야산길로 돈다":
+        "성문을 피해 외곽 배수로 쪽으로 돈다":
             $ suspicion += 1
             jump scene_021_bypass
 
@@ -261,12 +255,11 @@ label scene_021_in:
     jump scene_022
 
 label scene_021_bypass:
-    이현 serious "성 안은 이미 늦었다. 외곽으로 돈다."
+    이현 serious "성문은 이미 늦었다. 낮은 배수로 쪽으로 돌아 들어간다."
     소녀 numb "안에 아직 부르는 소리가 있어요."
     jump scene_022
 
 label scene_022:
-    scene bg town_market with dissolve
     show char 이현 serious at left with dissolve
     show char 소녀 flinch at right with dissolve
     "읍성 안은 장터가 아니라 배급을 기다리다 무너진 사람들의 굴이었다."
@@ -294,7 +287,6 @@ label scene_022_keep:
     jump scene_023
 
 label scene_023:
-    scene bg town_market with dissolve
     show char 이현 alert at left with dissolve
     show char 홍연 plead at right with moveinright
     "골목 끝에서 한 여인이 아이를 품에 숨긴 채 포졸의 발소리를 세고 있었다."
@@ -325,7 +317,6 @@ label scene_023_report:
     jump scene_024
 
 label scene_024:
-    scene bg town_market with dissolve
     show char 이현 alert at left with dissolve
     show char 소녀 panic at right with dissolve
     "광장 한편, 관군은 감염 의심자들을 창고에 몰아넣고 기름을 끼얹고 있었다."
@@ -353,7 +344,6 @@ label scene_024_ignore:
     jump scene_025
 
 label scene_025:
-    scene bg town_market with fade
     show char 이현 serious at left with dissolve
     "관아 옥사 뒤편, 잠긴 방 안에는 역귀 사체가 형틀에 묶여 있었다."
     "가슴은 열려 있었고, 머리에는 작은 관이 꽂혀 있었다."
@@ -361,7 +351,6 @@ label scene_025:
     jump scene_026
 
 label scene_026:
-    scene bg town_market with dissolve
     show char 강초석 suspicious at right with moveinright
     show char 이현 alert at left with dissolve
     "피 묻은 가죽 앞치마를 두른 사내가 그늘에서 나왔다."
@@ -377,11 +366,10 @@ label scene_026:
     jump scene_027
 
 label scene_027:
-    scene bg town_market with dissolve
     show char 월향 ritual at right with moveinright
     show char 소녀 trance at left with dissolve
     "장터 루각 아래, 무당 월향이 징을 느리게 울렸다."
-    "징소리가 퍼질 때마다 주변 역귀들이 한 걸음씩 물러났다."
+    "징소리가 퍼질 때마다 주변 역귀들이 한 걸음씩 물러났다. 칼보다 느리고, 관군보다 정확한 방어선이었다."
     "월향" ritual "죽은 몸은 소리를 듣고, 산 몸은 뜻을 듣지."
     소녀 trance "저 사람도... 노래를 알아요."
     menu:
@@ -407,8 +395,8 @@ label scene_027_ignore:
     "월향은 웃지도 않고 징을 한 번 더 울렸다."
     jump scene_028
 
+# SEQUENCE C4 Market Breakout: storage collapse -> blocked gate -> unit action -> temple promise
 label scene_028:
-    scene bg town_market with fade
     show char 역귀 alert at center with dissolve
     show char 이현 wounded at left with dissolve
     show char 소녀 panic at right with dissolve
@@ -420,7 +408,6 @@ label scene_028:
     jump scene_029
 
 label scene_029:
-    scene bg town_market with dissolve
     show char 이현 wounded at left with dissolve
     show char 강초석 resolve at right with dissolve
     show char 장덕팔 loyal at center with dissolve
@@ -432,15 +419,13 @@ label scene_029:
     jump scene_030
 
 label scene_030:
-    scene bg town_market with fade
     show char 이현 serious at left with dissolve
     show char 소녀 soft at right with dissolve
     show char 장덕팔 loyal at center with dissolve
     "간신히 읍성을 빠져나온 일행은 계곡 삼거리 언덕에서 멈췄다."
-    "뒤돌아본 성은 검은 연기와 울음소리 속에 잠겨 있었다."
+    "뒤돌아본 성은 검은 연기와 울음소리 속에 잠겨 있었다. 누구도 문을 닫지 않았다. 이미 닫을 사람이 남지 않았다."
     이현 serious "읍성도 끝났다. 산사로 간다."
     소녀 soft "거기엔 하얀 방이 없어요?"
     이현 serious "없게 만들 거다."
     "서하는 이현의 소맷자락을 잡았다. 이번엔 이현이 떼어내지 않았다."
-    "다음 씬과 챕터는 정식 릴리즈에서 오픈됩니다."
-    jump scene_030
+    "산길 끝, 새벽 종소리가 아직 죽은 자의 귀에 닿기 전이었다."
