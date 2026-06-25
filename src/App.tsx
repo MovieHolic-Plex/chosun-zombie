@@ -1,12 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { parseScript } from './engine/parser';
-import type { ScenarioCommand, ChoiceOption, GameVariables, SaveSlot, LogItem } from './engine/types';
+import type {
+  ChoiceOption,
+  GameVariables,
+  LogItem,
+  SaveSlot,
+  ScenarioCommand,
+  ShownCharacters,
+  VisualTransition
+} from './engine/types';
+import { getDefaultPosition } from './engine/visuals';
 import { Visuals } from './components/Visuals';
+import { CinematicIntro } from './components/CinematicIntro';
 import { DialogueBox } from './components/DialogueBox';
 import { MainMenu } from './components/MainMenu';
 import { SaveLoadModal } from './components/SaveLoadModal';
 import { LogModal } from './components/LogModal';
 import { SettingsModal } from './components/SettingsModal';
+import {
+  CRITICAL_INTRO_ASSETS,
+  INTRO_BG,
+  STORY_IMAGE_ASSETS,
+  preloadImages
+} from './engine/preload';
+import { useAudioDirector } from './hooks/useAudioDirector';
 
 const INITIAL_VARIABLES: GameVariables = {
   trust_girl: 0,
@@ -21,10 +38,13 @@ const INITIAL_VARIABLES: GameVariables = {
   allies: 0
 };
 
+const DEFAULT_TRANSITION: VisualTransition = 'dissolve';
+
 export default function App() {
   // Scenario Data
   const [scriptLabels, setScriptLabels] = useState<{ [label: string]: ScenarioCommand[] }>({});
   const [loading, setLoading] = useState(true);
+  const [loadingMessage, setLoadingMessage] = useState('시나리오 서책을 펼치는 중...');
 
   // Navigation State
   const [gameState, setGameState] = useState<'main_menu' | 'playing'>('main_menu');
@@ -32,9 +52,11 @@ export default function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // visual state
-  const [currentBg, setCurrentBg] = useState('');
-  const [shownCharacters, setShownCharacters] = useState<{ [charId: string]: string }>({});
+  const [currentBg, setCurrentBg] = useState(INTRO_BG);
+  const [currentBgTransition, setCurrentBgTransition] = useState<VisualTransition>(DEFAULT_TRANSITION);
+  const [shownCharacters, setShownCharacters] = useState<ShownCharacters>({});
   const [activeEffects, setActiveEffects] = useState<string[]>([]);
+  const [cinematicIntroActive, setCinematicIntroActive] = useState(false);
 
   // Variables and log
   const [variables, setVariables] = useState<GameVariables>(INITIAL_VARIABLES);
@@ -51,25 +73,48 @@ export default function App() {
   const [bgmVolume, setBgmVolume] = useState(50);
   const [sfxVolume, setSfxVolume] = useState(50);
   const [autoMode, setAutoMode] = useState(false);
-  const [skipMode, setSkipMode] = useState(false);
+  const [skipMode] = useState(false);
+  const {
+    unlockAudio,
+    playMusic,
+    stopMusic,
+    playSound,
+    stopSound
+  } = useAudioDirector(bgmVolume, sfxVolume);
 
   // Fetch and Parse Scripts on Mount
   useEffect(() => {
+    let cancelled = false;
+
     const loadScripts = async () => {
       try {
-        const prologueRes = await fetch('/scripts/prologue.txt');
-        const prologueText = await prologueRes.text();
-        const ch1Res = await fetch('/scripts/chapter01.txt');
-        const ch1Text = await ch1Res.text();
+        setLoadingMessage('시나리오 서책을 펼치는 중...');
+        const [prologueRes, ch1Res] = await Promise.all([
+          fetch('/scripts/prologue.txt'),
+          fetch('/scripts/chapter01.txt')
+        ]);
+        const [prologueText, ch1Text] = await Promise.all([
+          prologueRes.text(),
+          ch1Res.text()
+        ]);
 
         const prologueLabels = parseScript(prologueText);
         const ch1Labels = parseScript(ch1Text);
 
         const mergedLabels = { ...prologueLabels, ...ch1Labels };
+        setLoadingMessage('첫 장면의 그림자를 준비하는 중...');
+        await preloadImages(CRITICAL_INTRO_ASSETS, { timeoutMs: 5000 });
+        if (cancelled) return;
         setScriptLabels(mergedLabels);
         setLoading(false);
+        void preloadImages(STORY_IMAGE_ASSETS, { timeoutMs: 9000 });
       } catch (err) {
-        console.error('Failed to load visual novel scripts:', err);
+        if (cancelled) return;
+        if (err instanceof Error) {
+          console.error('Failed to load visual novel scripts:', err.message);
+        } else {
+          console.error('Failed to load visual novel scripts:', String(err));
+        }
         setLoading(false);
       }
     };
@@ -89,9 +134,16 @@ export default function App() {
       }
     }
     setSaveSlots(loadedSlots);
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const hasSaves = Object.values(saveSlots).some((s) => s !== null);
+  const handleCinematicIntroComplete = useCallback(() => {
+    setCinematicIntroActive(false);
+  }, []);
 
   // Scaler state and effect for responsive mobile landscape layout
   const [scale, setScale] = useState(1);
@@ -111,19 +163,30 @@ export default function App() {
   const executeCommand = (
     cmd: ScenarioCommand,
     varsState: GameVariables,
-    charsState: { [key: string]: string },
+    charsState: ShownCharacters,
     effectsState: string[],
-    bgState: { bg: string }
+    bgState: { bg: string; transition: VisualTransition }
   ) => {
     switch (cmd.type) {
       case 'scene':
         if (cmd.bgId) {
-          bgState.bg = cmd.bgId;
+          if (cmd.bgId !== bgState.bg) {
+            bgState.bg = cmd.bgId;
+            bgState.transition = cmd.transition || DEFAULT_TRANSITION;
+          }
+          Object.keys(charsState).forEach((charId) => {
+            delete charsState[charId];
+          });
+          effectsState.length = 0;
         }
         break;
       case 'show':
         if (cmd.charId) {
-          charsState[cmd.charId] = cmd.expression || 'neutral';
+          charsState[cmd.charId] = {
+            expression: cmd.expression || 'neutral',
+            position: cmd.position || getDefaultPosition(cmd.charId),
+            transition: cmd.transition || DEFAULT_TRANSITION
+          };
         }
         break;
       case 'hide':
@@ -154,16 +217,20 @@ export default function App() {
         }
         break;
       case 'play_music':
-        console.log(`[Bgm Interface] Playing music: ${cmd.audioId}`);
+        if (cmd.audioId) {
+          playMusic(cmd.audioId);
+        }
         break;
       case 'play_sound':
-        console.log(`[Sfx Interface] Playing sound: ${cmd.audioId}`);
+        if (cmd.audioId) {
+          playSound(cmd.audioId);
+        }
         break;
       case 'stop_music':
-        console.log(`[Bgm Interface] Stopping BGM`);
+        stopMusic();
         break;
       case 'stop_sound':
-        console.log(`[Sfx Interface] Stopping SFX`);
+        stopSound();
         break;
       default:
         break;
@@ -175,7 +242,7 @@ export default function App() {
     labels: { [label: string]: ScenarioCommand[] },
     labelName: string,
     vars: GameVariables,
-    chars: { [key: string]: string },
+    chars: ShownCharacters,
     effects: string[],
     bg: string
   ) => {
@@ -188,7 +255,7 @@ export default function App() {
     
     // Maintain snow effect if it's set
     const nextEffects = effects.includes('snow') ? ['snow'] : [];
-    const bgState = { bg };
+    const bgState = { bg, transition: currentBgTransition };
     let targetLabel = labelName;
     let jumped = false;
 
@@ -212,6 +279,7 @@ export default function App() {
     setShownCharacters(nextChars);
     setActiveEffects(nextEffects);
     setCurrentBg(bgState.bg);
+    setCurrentBgTransition(bgState.transition);
 
     if (jumped) {
       setCurrentLabel(targetLabel);
@@ -253,7 +321,7 @@ export default function App() {
     
     // Transient effects are removed upon advancement (like shake or flash), but snow stays
     const nextEffects = activeEffects.includes('snow') ? ['snow'] : [];
-    const bgState = { bg: currentBg };
+    const bgState = { bg: currentBg, transition: currentBgTransition };
     let targetLabel = currentLabel;
     let jumped = false;
 
@@ -277,6 +345,7 @@ export default function App() {
     setShownCharacters(nextChars);
     setActiveEffects(nextEffects);
     setCurrentBg(bgState.bg);
+    setCurrentBgTransition(bgState.transition);
 
     if (jumped) {
       setCurrentLabel(targetLabel);
@@ -295,7 +364,7 @@ export default function App() {
     const nextVars = { ...variables };
     const nextChars = { ...shownCharacters };
     const nextEffects = activeEffects.includes('snow') ? ['snow'] : [];
-    const bgState = { bg: currentBg };
+    const bgState = { bg: currentBg, transition: currentBgTransition };
 
     // Apply choice side effects
     option.effects.forEach((eff) => {
@@ -322,11 +391,14 @@ export default function App() {
 
   // Start New Game
   const handleStartGame = () => {
+    unlockAudio();
     setVariables(INITIAL_VARIABLES);
     setShownCharacters({});
-    setCurrentBg('');
+    setCurrentBg(INTRO_BG);
+    setCurrentBgTransition(DEFAULT_TRANSITION);
     setActiveEffects([]);
     setShownLog([]);
+    setCinematicIntroActive(true);
     setGameState('playing');
     setCurrentLabel('scene_001');
     setCurrentIndex(0);
@@ -347,6 +419,7 @@ export default function App() {
     }
 
     if (latestSlot) {
+      unlockAudio();
       loadSaveSlot(latestSlot);
     }
   };
@@ -355,9 +428,11 @@ export default function App() {
     setVariables(slot.variables);
     setShownCharacters(slot.shownCharacters);
     setCurrentBg(slot.currentBg);
+    setCurrentBgTransition(slot.currentBgTransition || DEFAULT_TRANSITION);
     setActiveEffects(slot.activeEffects);
     setCurrentLabel(slot.currentLabel);
     setCurrentIndex(slot.currentIndex);
+    setCinematicIntroActive(false);
     setGameState('playing');
     setActiveModal(null);
 
@@ -397,6 +472,7 @@ export default function App() {
       currentIndex,
       shownCharacters,
       currentBg,
+      currentBgTransition,
       activeEffects
     };
 
@@ -408,6 +484,7 @@ export default function App() {
   const handleLoadSlot = (slotId: number) => {
     const slot = saveSlots[slotId];
     if (slot) {
+      unlockAudio();
       loadSaveSlot(slot);
     }
   };
@@ -435,7 +512,7 @@ export default function App() {
           height: '720px' 
         }}
       >
-        시나리오 서책을 펼치는 중...
+        {loadingMessage}
       </div>
     );
   }
@@ -468,72 +545,12 @@ export default function App() {
             {/* Main Visual Presentation */}
             <Visuals
               bg={currentBg}
+              bgTransition={currentBgTransition}
               shownCharacters={shownCharacters}
               activeEffects={activeEffects}
             />
-
-            {/* Mapae & Hopae Styled QA Panel (Top Left) */}
-            <div className="mapae-container">
-              <div className="mapae-medallion">
-                <div className="mapae-knot" />
-                <div className="mapae-ring-outer">
-                  <div className="mapae-ring-inner">
-                    <div className="mapae-emblem-container">
-                      <div className="mapae-emblem">馬</div>
-                      <div className="mapae-text">暗行御史</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="mapae-bead" />
-                <div className="mapae-tassel" />
-              </div>
-              
-              <div className="hopae-tablet">
-                <div className="hopae-cord" />
-                <div className="hopae-hole" />
-                <div className="hopae-inner-border">
-                  <div className="hopae-title">관찰목패 (觀察木牌)</div>
-                  
-                  <div className="hopae-item">
-                    <span className="hopae-label">소녀 신뢰 (少女信賴)</span>
-                    <span className="hopae-val">{variables.trust_girl}</span>
-                  </div>
-                  <div className="hopae-item">
-                    <span className="hopae-label">인간성 (人間性)</span>
-                    <span className="hopae-val">{variables.humanity}</span>
-                  </div>
-                  <div className="hopae-item">
-                    <span className="hopae-label">소녀 의심 (少女疑心)</span>
-                    <span className="hopae-val">{variables.suspicion}</span>
-                  </div>
-                  <div className="hopae-item">
-                    <span className="hopae-label">역병 진실 (疫病眞實)</span>
-                    <span className="hopae-val">{variables.truth}</span>
-                  </div>
-                  <div className="hopae-item">
-                    <span className="hopae-label">역귀 공명 (疫鬼共鳴)</span>
-                    <span className="hopae-val">{variables.plague_resonance}</span>
-                  </div>
-                  <div className="hopae-item">
-                    <span className="hopae-label">군량 / 약재 (軍糧 / 藥材)</span>
-                    <span className="hopae-val">{variables.food} / {variables.medicine}</span>
-                  </div>
-                  <div className="hopae-item hopae-item-highlight">
-                    <span className="hopae-label">딸 집착 (執着)</span>
-                    <span className="hopae-val">{variables.daughter_attachment}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Dev Debugging overlay (Top Right) */}
-            <div className="debug-panel">
-              <strong>[개발용 상태판]</strong><br />
-              장면 표식: {currentLabel}<br />
-              진행 색인: {currentIndex} / {activeCommands.length - 1}<br />
-              수행 명령: {currentCommand?.type?.toUpperCase()}<br />
-              자동 진행: {autoMode ? '켬' : '끔'} | <span style={{ cursor: 'pointer', textDecoration: 'underline' }} onClick={() => setSkipMode(!skipMode)}>건너뛰기: {skipMode ? '켬' : '끔'}</span>
-            </div>
+            <div className="cinematic-stage-overlay" aria-hidden="true" />
+            <div className="cinematic-letterbox" aria-hidden="true" />
 
             {/* Dialogue Box and footer actions */}
             {currentCommand && displayCommand && (
@@ -551,9 +568,17 @@ export default function App() {
                 onOpenSave={() => setActiveModal('save')}
                 onOpenLoad={() => setActiveModal('load')}
                 onOpenSettings={() => setActiveModal('settings')}
-                onExit={() => setGameState('main_menu')}
+                onExit={() => {
+                  stopMusic();
+                  setCinematicIntroActive(false);
+                  setGameState('main_menu');
+                }}
                 onToggleAuto={() => setAutoMode(!autoMode)}
               />
+            )}
+
+            {cinematicIntroActive && (
+              <CinematicIntro onComplete={handleCinematicIntroComplete} />
             )}
           </>
         )}

@@ -38,6 +38,20 @@ export const useTransparentImage = (src: string, threshold = 40): string => {
         const width = imgData.width;
         const height = imgData.height;
 
+        let hasUsefulAlpha = false;
+        for (let i = 3; i < data.length; i += 4) {
+          if (data[i] < 250) {
+            hasUsefulAlpha = true;
+            break;
+          }
+        }
+
+        if (hasUsefulAlpha) {
+          transparentCache.set(src, src);
+          setProcessedSrc(src);
+          return;
+        }
+
         // Sample background color from top-left pixel (0, 0)
         const bgR = data[0];
         const bgG = data[1];

@@ -1,5 +1,34 @@
 export type ExpressionType = 'neutral' | 'alert' | 'anxious' | 'protect';
 
+export type VisualTransition =
+  | 'none'
+  | 'dissolve'
+  | 'fade'
+  | 'moveinleft'
+  | 'moveinright'
+  | 'moveoutleft'
+  | 'moveoutright'
+  | 'ease'
+  | 'hpunch'
+  | 'vpunch'
+  | 'flash'
+  | 'flash-red'
+  | 'flash-white';
+
+export type CharacterPosition = 'left' | 'center' | 'right';
+
+export interface CharacterVisualState {
+  readonly expression: string;
+  readonly position: CharacterPosition;
+  readonly transition: VisualTransition;
+}
+
+export type CharacterDisplay = string | CharacterVisualState;
+
+export interface ShownCharacters {
+  [charId: string]: CharacterDisplay;
+}
+
 export type CommandType =
   | 'label'
   | 'scene'
@@ -38,6 +67,8 @@ export interface ScenarioCommand {
   bgId?: string;
   charId?: string;
   expression?: string;
+  position?: CharacterPosition;
+  transition?: VisualTransition;
   effectId?: string;
   audioId?: string;
   varChange?: VariableChange;
@@ -70,7 +101,8 @@ export interface SaveSlot {
   variables: GameVariables;
   currentLabel: string;
   currentIndex: number;
-  shownCharacters: { [charId: string]: string }; // charId -> expression
+  shownCharacters: ShownCharacters;
+  currentBgTransition?: VisualTransition;
   currentBg: string;
   activeEffects: string[];
 }

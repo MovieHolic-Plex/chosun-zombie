@@ -48,13 +48,13 @@ export const DialogueBox: React.FC<DialogueBoxProps> = ({
 
   // Multi-step fallback for portrait image path:
   // 1. Dedicated face chip with current expression: /assets/face/ih_angry.png
-  // 2. Dedicated face chip with neutral expression: /assets/face/ih_neutral.png
-  // 3. Full sprite with current expression: /assets/char/ih_angry.png
+  // 2. Full sprite with current expression: /assets/char/ih_angry.png
+  // 3. Dedicated face chip with neutral expression: /assets/face/ih_neutral.png
   // 4. Full sprite with neutral expression: /assets/char/ih_neutral.png
   const portraitCandidates = charCode ? Array.from(new Set([
     `/assets/face/${charCode}_${expr}.png`,
-    `/assets/face/${charCode}_neutral.png`,
     `/assets/char/${charCode}_${expr}.png`,
+    `/assets/face/${charCode}_neutral.png`,
     `/assets/char/${charCode}_neutral.png`
   ])) : [];
 

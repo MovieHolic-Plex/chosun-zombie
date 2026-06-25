@@ -1,42 +1,40 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useTransparentImage } from '../hooks/useTransparentImage';
-import { CHARACTER_MAP } from '../engine/types';
+import type { ShownCharacters, VisualTransition } from '../engine/types';
+import {
+  createRenderedSprite,
+  getBgUrl,
+  resolveCharacterVisual
+} from '../engine/visuals';
+import type { RenderedSprite, ResolvedCharacterVisual } from '../engine/visuals';
 
 interface VisualsProps {
   bg: string;
-  shownCharacters: { [charId: string]: string }; // charId -> expression
+  bgTransition: VisualTransition;
+  shownCharacters: ShownCharacters;
   activeEffects: string[];
 }
 
-// Maps bg IDs to local paths or generated visual representations
-const getBgUrl = (bgId: string): string => {
-  // If we generate them, they'll be saved in /assets/bg/[bgId].png
-  // To prevent errors when files don't exist yet, we'll fall back to gradients if image loading fails
-  return `/assets/bg/${bgId}.png`;
-};
-
-// Maps character and expression to image URL
-const getCharacterUrl = (charId: string, expression: string): string => {
-  const formattedExpr = expression.toLowerCase();
-  const code = CHARACTER_MAP[charId] || 'sh';
-  const filename = `${code}_${formattedExpr}.png`;
-  return `/assets/char/${filename}`;
-};
+const TRANSITION_DURATION_MS = 680;
 
 // Sub-component to safely call useTransparentImage Hook for each character
-const CharacterSprite: React.FC<{ charId: string; expr: string; positionClass: string }> = ({
-  charId,
-  expr,
-  positionClass
-}) => {
-  const rawUrl = getCharacterUrl(charId, expr);
-  const transparentUrl = useTransparentImage(rawUrl, 40);
+const CharacterSprite: React.FC<{ sprite: RenderedSprite }> = ({ sprite }) => {
+  const transparentUrl = useTransparentImage(sprite.imageUrl, 40);
+  const positionClass = `char-pos-${sprite.position}`;
 
   return (
-    <div className={`character-sprite-wrapper ${positionClass}`}>
+    <div
+      className={[
+        'character-sprite-wrapper',
+        positionClass,
+        `char-code-${sprite.characterCode}`,
+        `renpy-${sprite.phase}`,
+        `renpy-${sprite.transition}`
+      ].join(' ')}
+    >
       <img
         src={transparentUrl}
-        alt={`${charId} (${expr})`}
+        alt={`${sprite.charId} (${sprite.expression})`}
         className="character-sprite-img"
         onError={(e) => {
           // Fallback if AI image file is not generated/loaded yet
@@ -59,7 +57,7 @@ const CharacterSprite: React.FC<{ charId: string; expr: string; positionClass: s
           alignItems: 'center',
           width: '180px',
           height: '420px',
-          backgroundColor: charId === '이현' ? 'rgba(45, 45, 45, 0.85)' : 'rgba(58, 80, 107, 0.85)',
+          backgroundColor: sprite.charId === '이현' ? 'rgba(45, 45, 45, 0.85)' : 'rgba(58, 80, 107, 0.85)',
           border: '3px double var(--hanji-beige-4)',
           color: 'var(--hanji-beige-2)',
           fontFamily: 'var(--font-serif)',
@@ -72,20 +70,28 @@ const CharacterSprite: React.FC<{ charId: string; expr: string; positionClass: s
         }}
       >
         <span style={{ fontSize: '14px', marginBottom: '8px', writingMode: 'horizontal-tb' }}>
-          [{expr.toUpperCase()}]
+          [{sprite.expression.toUpperCase()}]
         </span>
-        {charId}
+        {sprite.charId}
       </div>
     </div>
   );
 };
 
-export const Visuals: React.FC<VisualsProps> = ({ bg, shownCharacters, activeEffects }) => {
+export const Visuals: React.FC<VisualsProps> = ({
+  bg,
+  bgTransition,
+  shownCharacters,
+  activeEffects
+}) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const previousCharactersRef = useRef<Record<string, ResolvedCharacterVisual>>({});
+  const renderSequenceRef = useRef(0);
 
   // Transition background state
   const [currentBg, setCurrentBg] = useState(bg);
   const [prevBg, setPrevBg] = useState('');
+  const [exitingSprites, setExitingSprites] = useState<readonly RenderedSprite[]>([]);
 
   useEffect(() => {
     if (bg !== currentBg) {
@@ -93,10 +99,42 @@ export const Visuals: React.FC<VisualsProps> = ({ bg, shownCharacters, activeEff
       setCurrentBg(bg);
       const timer = setTimeout(() => {
         setPrevBg('');
-      }, 600); // 600ms transition
+      }, TRANSITION_DURATION_MS);
       return () => clearTimeout(timer);
     }
   }, [bg, currentBg]);
+
+  const currentCharacters = useMemo<Record<string, ResolvedCharacterVisual>>(() => {
+    const resolvedCharacters: Record<string, ResolvedCharacterVisual> = {};
+    Object.entries(shownCharacters).forEach(([charId, display]) => {
+      resolvedCharacters[charId] = resolveCharacterVisual(charId, display);
+    });
+    return resolvedCharacters;
+  }, [shownCharacters]);
+
+  useEffect(() => {
+    const previousCharacters = previousCharactersRef.current;
+    const nextExiting: RenderedSprite[] = [];
+
+    Object.entries(previousCharacters).forEach(([charId, previous]) => {
+      const next = currentCharacters[charId];
+      if (!next || next.imageKey !== previous.imageKey) {
+        renderSequenceRef.current += 1;
+        nextExiting.push(createRenderedSprite(previous, 'exit', renderSequenceRef.current));
+      }
+    });
+
+    previousCharactersRef.current = currentCharacters;
+
+    if (nextExiting.length === 0) return;
+
+    setExitingSprites((prev) => [...prev, ...nextExiting]);
+    const timer = setTimeout(() => {
+      setExitingSprites((prev) => prev.filter((sprite) => !nextExiting.includes(sprite)));
+    }, TRANSITION_DURATION_MS);
+
+    return () => clearTimeout(timer);
+  }, [currentCharacters]);
 
   // Canvas Snow Particle System
   useEffect(() => {
@@ -173,15 +211,24 @@ export const Visuals: React.FC<VisualsProps> = ({ bg, shownCharacters, activeEff
 
   // Determine shake and flash classes
   const isShake = activeEffects.includes('shake');
+  const isHpunch = activeEffects.includes('hpunch');
+  const isVpunch = activeEffects.includes('vpunch');
   const isFlashRed = activeEffects.includes('flash-red') || activeEffects.includes('flash');
   const isFlashWhite = activeEffects.includes('flash-white');
 
   return (
-    <div className={`visuals-container ${isShake ? 'shake' : ''}`}>
+    <div
+      className={[
+        'visuals-container',
+        isShake ? 'shake' : '',
+        isHpunch ? 'renpy-hpunch' : '',
+        isVpunch ? 'renpy-vpunch' : ''
+      ].join(' ')}
+    >
       {/* Previous Background Layer (fading out) */}
       {prevBg && (
         <div
-          className="background-layer fade-out"
+          className={`background-layer renpy-bg-out renpy-${bgTransition}`}
           style={{
             backgroundImage: `url(${getBgUrl(prevBg)})`,
             backgroundColor: '#16171d',
@@ -192,7 +239,7 @@ export const Visuals: React.FC<VisualsProps> = ({ bg, shownCharacters, activeEff
 
       {/* Current Background Layer (fading in) */}
       <div
-        className="background-layer fade-in"
+        className={`background-layer renpy-bg-in renpy-${bgTransition}`}
         style={{
           backgroundImage: currentBg
             ? `url(${getBgUrl(currentBg)})`
@@ -213,23 +260,12 @@ export const Visuals: React.FC<VisualsProps> = ({ bg, shownCharacters, activeEff
 
       {/* Character Sprite Layer */}
       <div className="character-layer">
-        {Object.entries(shownCharacters).map(([charId, expr]) => {
-          // Determine sprite position
-          let positionClass = 'char-pos-center';
-          if (charId === '이현') {
-            positionClass = 'char-pos-left';
-          } else if (charId === '소녀') {
-            positionClass = 'char-pos-right';
-          }
-
-          return (
-            <CharacterSprite
-              key={charId}
-              charId={charId}
-              expr={expr}
-              positionClass={positionClass}
-            />
-          );
+        {exitingSprites.map((sprite) => (
+          <CharacterSprite key={sprite.renderKey} sprite={sprite} />
+        ))}
+        {Object.values(currentCharacters).map((visual) => {
+          const sprite = createRenderedSprite(visual, 'enter', 0);
+          return <CharacterSprite key={visual.imageKey} sprite={sprite} />;
         })}
       </div>
     </div>
