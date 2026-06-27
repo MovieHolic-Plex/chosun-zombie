@@ -3,7 +3,7 @@
   "private": false,
   "version": "0.1.0-demo.0",
   "description": "A cinematic Joseon zombie visual-novel demo built with React, TypeScript, and Vite.",
-  "license": "MIT",
+  "license": "Unlicense",
   "repository": {
     "type": "git",
     "url": "https://github.com/MovieHolic-Plex/chosun-zombie.git"
