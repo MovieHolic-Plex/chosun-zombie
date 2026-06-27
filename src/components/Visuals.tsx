@@ -20,38 +20,39 @@ const TRANSITION_DURATION_MS = 680;
 // Sub-component to safely call useTransparentImage Hook for each character
 const CharacterSprite: React.FC<{ sprite: RenderedSprite }> = ({ sprite }) => {
   const transparentUrl = useTransparentImage(sprite.imageUrl, 40);
+  const [hasImageError, setHasImageError] = useState(false);
   const positionClass = `char-pos-${sprite.position}`;
+  const imageReady = transparentUrl.length > 0;
+  const shouldRenderImage = imageReady && !hasImageError;
+
+  useEffect(() => {
+    setHasImageError(false);
+  }, [sprite.imageUrl]);
 
   return (
     <div
       className={[
         'character-sprite-wrapper',
+        imageReady ? 'is-ready' : 'is-loading',
         positionClass,
         `char-code-${sprite.characterCode}`,
         `renpy-${sprite.phase}`,
         `renpy-${sprite.transition}`
       ].join(' ')}
     >
-      <img
-        src={transparentUrl}
-        alt={`${sprite.charId} (${sprite.expression})`}
-        className="character-sprite-img"
-        onError={(e) => {
-          // Fallback if AI image file is not generated/loaded yet
-          // Renders a high quality styled SVG placeholder box
-          e.currentTarget.style.display = 'none';
-          const parent = e.currentTarget.parentElement;
-          if (parent) {
-            const fallback = parent.querySelector('.char-fallback');
-            if (fallback) (fallback as HTMLElement).style.display = 'flex';
-          }
-        }}
-      />
+      {shouldRenderImage && (
+        <img
+          src={transparentUrl}
+          alt={`${sprite.charId} (${sprite.expression})`}
+          className="character-sprite-img"
+          onError={() => setHasImageError(true)}
+        />
+      )}
       {/* Fallback silhouette block with calligraphy text */}
       <div
         className="char-fallback"
         style={{
-          display: 'none',
+          display: hasImageError ? 'flex' : 'none',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
@@ -215,6 +216,22 @@ export const Visuals: React.FC<VisualsProps> = ({
   const isVpunch = activeEffects.includes('vpunch');
   const isFlashRed = activeEffects.includes('flash-red') || activeEffects.includes('flash');
   const isFlashWhite = activeEffects.includes('flash-white');
+  const stagePositionClass = useMemo(() => {
+    const activePositions = Object.values(currentCharacters).map((visual) => visual.position);
+    const hasLeft = activePositions.includes('left');
+    const hasCenter = activePositions.includes('center');
+    const hasRight = activePositions.includes('right');
+
+    if (hasLeft && hasCenter && !hasRight) {
+      return 'stage-left-center';
+    }
+
+    if (!hasLeft && hasCenter && hasRight) {
+      return 'stage-center-right';
+    }
+
+    return '';
+  }, [currentCharacters]);
 
   return (
     <div
@@ -259,7 +276,7 @@ export const Visuals: React.FC<VisualsProps> = ({
       {isFlashWhite && <div className="screen-effect-container flash-white" />}
 
       {/* Character Sprite Layer */}
-      <div className="character-layer">
+      <div className={['character-layer', stagePositionClass].filter(Boolean).join(' ')}>
         {exitingSprites.map((sprite) => (
           <CharacterSprite key={sprite.renderKey} sprite={sprite} />
         ))}

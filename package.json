@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/MovieHolic-Plex/chosun-zombie/issues"
   },
-  "homepage": "https://github.com/MovieHolic-Plex/chosun-zombie#readme",
+  "homepage": "https://zombie-chosun.hyeon.space",
   "keywords": [
     "visual-novel",
     "demo",
@@ -26,7 +26,11 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "validate:vn-assets": "node scripts/tools/validate-vn-assets.mjs",
+    "validate:prologue-paths": "node scripts/tools/validate-prologue-paths.mjs",
+    "dns:check": "node scripts/deploy/namecheap-set-host.mjs --check",
+    "dns:upsert:zombie-chosun": "node scripts/deploy/namecheap-set-host.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.21.0",

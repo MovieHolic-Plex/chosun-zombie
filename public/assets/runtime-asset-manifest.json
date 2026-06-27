@@ -1,0 +1,468 @@
+{
+  "version": 2,
+  "generatedAt": "2026-06-27T08:06:34.458Z",
+  "styleReference": "public/assets/concept/pixel-style-tests/style-test-02-mid-res-cinematic.png",
+  "visualHarness": ".github/instructions/visual-reference-harness.md",
+  "assets": [
+    {
+      "id": "abandoned_inn",
+      "kind": "bg",
+      "path": "public/assets/bg/abandoned_inn.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "beacf9d697ead94325f5b70f34471c214243de355009289f445346b0e87e384f",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "forbidden_village",
+      "kind": "bg",
+      "path": "public/assets/bg/forbidden_village.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "cab6a07d080beb1a14c01b5b5f003925515beab00774533aa954cbc39d2cf731",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "intro_refugees",
+      "kind": "bg",
+      "path": "public/assets/bg/intro_refugees.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "a5f4bd343d8e6886d5c6fd273e9ce2e749fab0418f8bcaa9f24892286e097f35",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "intro_snow_pass",
+      "kind": "bg",
+      "path": "public/assets/bg/intro_snow_pass.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "cdd51a36c06e874ef14fc9fccb396ace19780ef66be6ad9ab77f8eb73ad520b6",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "sealed_outpost",
+      "kind": "bg",
+      "path": "public/assets/bg/sealed_outpost.png",
+      "width": 1672,
+      "height": 940,
+      "sha256": "90663e6c39e60d477839d78c955895d1c4b3f8a9a9ecb0807eff6f2ef87c9b09",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "cg001_national_collapse",
+      "kind": "cg",
+      "path": "public/assets/cg/cg001_national_collapse.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "79822c9e36b2ea6a80fb9b3dbb32b8025f247f354dab567bbcae4fd9ec543e84",
+      "sourceReference": "public/assets/concept/first-batch-midres/overview-contact-sheet.png",
+      "approvalStatus": "reference-derived-approved"
+    },
+    {
+      "id": "cg002_refugee_white_breath",
+      "kind": "cg",
+      "path": "public/assets/cg/cg002_refugee_white_breath.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "b9f11a496137cc7633483ba4a615d1201aa4222c440aef05e87d3f2a3a8f8049",
+      "sourceReference": "public/assets/concept/first-batch-midres/overview-contact-sheet.png",
+      "approvalStatus": "reference-derived-approved"
+    },
+    {
+      "id": "cg003_outpost_bell",
+      "kind": "cg",
+      "path": "public/assets/cg/cg003_outpost_bell.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "7bc0455be478603828a1311634dffd2e2a91b1cd8a038dd1eea68f0f6b2010b9",
+      "sourceReference": "public/assets/concept/first-batch-midres/overview-contact-sheet.png",
+      "approvalStatus": "reference-derived-approved"
+    },
+    {
+      "id": "cg004_oath_under_snow",
+      "kind": "cg",
+      "path": "public/assets/cg/cg004_oath_under_snow.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "271cd64f3c14726c4d2eb06c572d64e9e7c4cdef627c7dc7c0fac6cb3d9f77ac",
+      "sourceReference": "public/assets/concept/first-batch-midres/overview-contact-sheet.png",
+      "approvalStatus": "reference-derived-approved"
+    },
+    {
+      "id": "cg005_inn_sickroom",
+      "kind": "cg",
+      "path": "public/assets/cg/cg005_inn_sickroom.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "c69453a91f60ce5022c7acfc267fed207296b2cf3eb13cd34d772ea4313d6c98",
+      "sourceReference": "public/assets/concept/first-batch-midres/overview-contact-sheet.png",
+      "approvalStatus": "reference-derived-approved"
+    },
+    {
+      "id": "cg008_dead_follow_drum",
+      "kind": "cg",
+      "path": "public/assets/cg/cg008_dead_follow_drum.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "6ed5d35330847e8663f33bdd30ec97500e23b022b4f454d4a85fd8b0f9698238",
+      "sourceReference": "public/assets/concept/first-batch-midres/overview-contact-sheet.png",
+      "approvalStatus": "reference-derived-approved"
+    },
+    {
+      "id": "cg009_child_marks",
+      "kind": "cg",
+      "path": "public/assets/cg/cg009_child_marks.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "39175250c559345ba77c00e5c70d56294f35f02682e5a275cb48209b095af2fa",
+      "sourceReference": "public/assets/concept/first-batch-midres/overview-contact-sheet.png",
+      "approvalStatus": "reference-derived-approved"
+    },
+    {
+      "id": "cg022_final_snow",
+      "kind": "cg",
+      "path": "public/assets/cg/cg022_final_snow.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "a9bfbf33dc4b3b843e32bf9759600530472681b3e65af3b7ed34266e5a7d4cca",
+      "sourceReference": "public/assets/concept/first-batch-midres/overview-contact-sheet.png",
+      "approvalStatus": "reference-derived-approved"
+    },
+    {
+      "id": "dp_startled",
+      "kind": "char",
+      "path": "public/assets/char/dp_startled.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "c0df664dcc7e3f19a7ba9fa7c346f7e2d4a104eaa2605829ae830f39d680e63a",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "dp_wary",
+      "kind": "char",
+      "path": "public/assets/char/dp_wary.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "c0df664dcc7e3f19a7ba9fa7c346f7e2d4a104eaa2605829ae830f39d680e63a",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "ih_alert",
+      "kind": "char",
+      "path": "public/assets/char/ih_alert.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "bcbdbaac9cf8f99a1ca176293f3f1ceef6e67719ed2fff790da12dcde2da5b3c",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "ih_angry",
+      "kind": "char",
+      "path": "public/assets/char/ih_angry.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "bcbdbaac9cf8f99a1ca176293f3f1ceef6e67719ed2fff790da12dcde2da5b3c",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "ih_anxious",
+      "kind": "char",
+      "path": "public/assets/char/ih_anxious.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "bcbdbaac9cf8f99a1ca176293f3f1ceef6e67719ed2fff790da12dcde2da5b3c",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "ih_protect",
+      "kind": "char",
+      "path": "public/assets/char/ih_protect.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "bcbdbaac9cf8f99a1ca176293f3f1ceef6e67719ed2fff790da12dcde2da5b3c",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "ih_sad",
+      "kind": "char",
+      "path": "public/assets/char/ih_sad.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "bcbdbaac9cf8f99a1ca176293f3f1ceef6e67719ed2fff790da12dcde2da5b3c",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "ih_serious",
+      "kind": "char",
+      "path": "public/assets/char/ih_serious.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "bcbdbaac9cf8f99a1ca176293f3f1ceef6e67719ed2fff790da12dcde2da5b3c",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "sh_flinch",
+      "kind": "char",
+      "path": "public/assets/char/sh_flinch.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "4ef62ae7d8344bd25d262ac01d1153da921509d418688e24c3bf5e5f0a796c61",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "sh_numb",
+      "kind": "char",
+      "path": "public/assets/char/sh_numb.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "4ef62ae7d8344bd25d262ac01d1153da921509d418688e24c3bf5e5f0a796c61",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "sh_panic",
+      "kind": "char",
+      "path": "public/assets/char/sh_panic.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "4ef62ae7d8344bd25d262ac01d1153da921509d418688e24c3bf5e5f0a796c61",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "sh_soft",
+      "kind": "char",
+      "path": "public/assets/char/sh_soft.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "4ef62ae7d8344bd25d262ac01d1153da921509d418688e24c3bf5e5f0a796c61",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "sh_trance",
+      "kind": "char",
+      "path": "public/assets/char/sh_trance.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "4ef62ae7d8344bd25d262ac01d1153da921509d418688e24c3bf5e5f0a796c61",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "dp_startled",
+      "kind": "face",
+      "path": "public/assets/face/dp_startled.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "83d753513d9d2badae668abcb6ef200a43e902424cb2c649e8872d0aa0493c08",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "dp_wary",
+      "kind": "face",
+      "path": "public/assets/face/dp_wary.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "83d753513d9d2badae668abcb6ef200a43e902424cb2c649e8872d0aa0493c08",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "ih_alert",
+      "kind": "face",
+      "path": "public/assets/face/ih_alert.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "31b30436f1b07e1ead182156627e44b7109a0f3d401f63c691a2f217b7ce9b52",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "ih_angry",
+      "kind": "face",
+      "path": "public/assets/face/ih_angry.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "31b30436f1b07e1ead182156627e44b7109a0f3d401f63c691a2f217b7ce9b52",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "ih_anxious",
+      "kind": "face",
+      "path": "public/assets/face/ih_anxious.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "31b30436f1b07e1ead182156627e44b7109a0f3d401f63c691a2f217b7ce9b52",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "ih_protect",
+      "kind": "face",
+      "path": "public/assets/face/ih_protect.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "31b30436f1b07e1ead182156627e44b7109a0f3d401f63c691a2f217b7ce9b52",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "ih_sad",
+      "kind": "face",
+      "path": "public/assets/face/ih_sad.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "31b30436f1b07e1ead182156627e44b7109a0f3d401f63c691a2f217b7ce9b52",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "ih_serious",
+      "kind": "face",
+      "path": "public/assets/face/ih_serious.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "31b30436f1b07e1ead182156627e44b7109a0f3d401f63c691a2f217b7ce9b52",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "sh_flinch",
+      "kind": "face",
+      "path": "public/assets/face/sh_flinch.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "5c9eafa4fe705859bd75b5a64861f58d6769af5064fcfebccb6188703c9e355c",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "sh_numb",
+      "kind": "face",
+      "path": "public/assets/face/sh_numb.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "5c9eafa4fe705859bd75b5a64861f58d6769af5064fcfebccb6188703c9e355c",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "sh_panic",
+      "kind": "face",
+      "path": "public/assets/face/sh_panic.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "5c9eafa4fe705859bd75b5a64861f58d6769af5064fcfebccb6188703c9e355c",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "sh_soft",
+      "kind": "face",
+      "path": "public/assets/face/sh_soft.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "5c9eafa4fe705859bd75b5a64861f58d6769af5064fcfebccb6188703c9e355c",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "sh_trance",
+      "kind": "face",
+      "path": "public/assets/face/sh_trance.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "5c9eafa4fe705859bd75b5a64861f58d6769af5064fcfebccb6188703c9e355c",
+      "sourceReference": "public/assets/generated-reboot-2026-06-26",
+      "approvalStatus": "generated-reboot-accepted"
+    },
+    {
+      "id": "cg006_seoha_first_bell",
+      "kind": "cg",
+      "path": "public/assets/cg/cg006_seoha_first_bell.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "72cc5dd5b2851d61633a2e966dc17e32b124787f4fbd99c1898d6253ac2a8023",
+      "sourceReference": ".omo/evidence/prologue-event-candidates/cg006_seoha_first_bell_candidate.png",
+      "approvalStatus": "prologue-event-selected"
+    },
+    {
+      "id": "cg007_unseen_watcher_marks",
+      "kind": "cg",
+      "path": "public/assets/cg/cg007_unseen_watcher_marks.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "1e5edc3395d0f5391cf9039e6ddfaea6c49bb5f107dee0a0c21d551567ec2098",
+      "sourceReference": ".omo/evidence/prologue-event-candidates/cg007_unseen_watcher_marks_candidate.png",
+      "approvalStatus": "prologue-event-selected"
+    },
+    {
+      "id": "cg010_well_talisman_voice",
+      "kind": "cg",
+      "path": "public/assets/cg/cg010_well_talisman_voice.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "4718a25be90de50b19533f331c46e53f31ed180d283dd066969101237fb14fa7",
+      "sourceReference": ".omo/evidence/prologue-event-candidates/cg010_well_talisman_voice_candidate.png",
+      "approvalStatus": "prologue-event-selected"
+    },
+    {
+      "id": "cg011_dead_son_question",
+      "kind": "cg",
+      "path": "public/assets/cg/cg011_dead_son_question.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "58176162aa285bec32e059a433c2cb083b6bd0f8e122e7200f667e5a95c825a9",
+      "sourceReference": ".omo/evidence/prologue-event-candidates/cg011_dead_son_question_v2_candidate.png",
+      "approvalStatus": "prologue-event-selected"
+    },
+    {
+      "id": "cg012_mother_farewell",
+      "kind": "cg",
+      "path": "public/assets/cg/cg012_mother_farewell.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "6e66f8b6ba9641a0c0209582da449a5816d5ce5bed853b74f875f49ba312590a",
+      "sourceReference": ".omo/evidence/prologue-event-candidates/cg012_mother_farewell_candidate.png",
+      "approvalStatus": "prologue-event-selected"
+    },
+    {
+      "id": "cg013_hard_choice_aftermath",
+      "kind": "cg",
+      "path": "public/assets/cg/cg013_hard_choice_aftermath.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "1f64fb6cf42d0a7fcc7467029a579d03d61b49ff7c638144181cccc679ad9121",
+      "sourceReference": ".omo/evidence/prologue-event-candidates/cg013_hard_choice_aftermath_v2_candidate.png",
+      "approvalStatus": "prologue-event-selected"
+    },
+    {
+      "id": "cg014_door_sigil_laughter",
+      "kind": "cg",
+      "path": "public/assets/cg/cg014_door_sigil_laughter.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "516c75e3c5707b1fa9baa720435e0df5e2b97a86c42ae46dc81829b50058cbb4",
+      "sourceReference": ".omo/evidence/prologue-event-candidates/cg014_door_sigil_laughter_candidate.png",
+      "approvalStatus": "prologue-event-selected"
+    }
+  ]
+}

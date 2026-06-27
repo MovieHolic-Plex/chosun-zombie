@@ -32,6 +32,7 @@ export interface ShownCharacters {
 export type CommandType =
   | 'label'
   | 'scene'
+  | 'cinematic'
   | 'show'
   | 'hide'
   | 'play_music'
@@ -65,6 +66,7 @@ export interface ScenarioCommand {
   // Specific command payloads
   labelName?: string;
   bgId?: string;
+  cgId?: string;
   charId?: string;
   expression?: string;
   position?: CharacterPosition;
@@ -112,7 +114,15 @@ export interface LogItem {
   text: string;
 }
 
+export const assertNever = (value: never): never => {
+  throw new Error(`Unhandled variant: ${String(value)}`);
+};
+
 export const CHARACTER_MAP: { [name: string]: string } = {
+  '?λ뜒??': 'dp',
+  '?댄쁽': 'ih',
+  '?뷀뼢': 'wh',
+  '?쒗븯': 'sh',
   '이현': 'ih',
   '소녀': 'sh',
   '서하': 'sh',

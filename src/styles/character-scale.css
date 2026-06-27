@@ -1,3 +1,30 @@
+.character-sprite-wrapper {
+  transition:
+    opacity 0.52s ease-in-out,
+    transform 0.52s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.52s ease-in-out;
+  backface-visibility: hidden;
+  will-change: opacity, transform, filter;
+}
+
+.character-sprite-img {
+  transform: translateZ(0);
+}
+
+.character-sprite-wrapper.char-code-ih .character-sprite-img {
+  height: 96%;
+}
+
 .character-sprite-wrapper.char-code-sh .character-sprite-img {
   height: 76%;
+}
+
+@keyframes renpyDissolveIn {
+  from { opacity: 0; filter: blur(1px); transform: translateZ(0); }
+  to { opacity: 1; filter: blur(0); transform: translateZ(0); }
+}
+
+@keyframes renpyDissolveOut {
+  from { opacity: 1; filter: blur(0); transform: translateZ(0); }
+  to { opacity: 0; filter: blur(1px); transform: translateZ(0); }
 }

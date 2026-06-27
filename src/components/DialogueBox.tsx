@@ -65,8 +65,9 @@ export const DialogueBox: React.FC<DialogueBoxProps> = ({
   }, [speaker, expression]);
 
   const rawPortraitUrl = portraitCandidates[fallbackIndex] || '';
-  const transparentPortraitUrl = useTransparentImage(rawPortraitUrl, 40);
   const isFaceChip = rawPortraitUrl.startsWith('/assets/face/');
+  const transparentPortraitUrl = useTransparentImage(isFaceChip ? '' : rawPortraitUrl, 40);
+  const portraitUrl = isFaceChip ? rawPortraitUrl : transparentPortraitUrl;
 
   // Typewriter Effect
   useEffect(() => {
@@ -169,11 +170,11 @@ export const DialogueBox: React.FC<DialogueBoxProps> = ({
         style={{ cursor: (options && options.length > 0) ? 'default' : 'pointer' }}
       >
         {/* Character Portrait inside Box (Left aligned, similar to concept sheet UI) */}
-        {showPortrait && transparentPortraitUrl && (
+        {showPortrait && portraitUrl && (
           <div className="dialogue-portrait-area brush-border">
             <img
-              key={transparentPortraitUrl}
-              src={transparentPortraitUrl}
+              key={portraitUrl}
+              src={portraitUrl}
               alt={speaker}
               className={`dialogue-portrait-img ${isFaceChip ? 'face-chip' : 'full-sprite'}`}
               onLoad={(event) => {

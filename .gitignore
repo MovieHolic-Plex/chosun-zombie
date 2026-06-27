@@ -7,6 +7,10 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+.env
+.env.*
+!.env.example
+
 node_modules
 dist
 dist-ssr
@@ -14,6 +18,8 @@ dist-ssr
 .codegraph
 .omo
 qa_screenshots
+
+public/scripts/_AI*.txt
 
 # Editor directories and files
 .vscode/*

@@ -163,7 +163,7 @@ body {
   background:
     radial-gradient(circle at 50% 46%, rgba(92, 0, 0, 0.28) 0%, rgba(10, 17, 40, 0.46) 34%, rgba(0, 0, 0, 0.98) 72%),
     linear-gradient(180deg, rgba(0, 0, 0, 0.84), rgba(11, 11, 13, 0.98)),
-    url("/assets/bg/snow_mountain_pass.png") center / cover;
+    url("/assets/bg/intro_snow_pass.png") center / cover;
   animation: cinematicIntroVeil 4.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -406,7 +406,7 @@ body {
   background:
     radial-gradient(circle at 50% 42%, rgba(28,37,65,0.45) 0%, rgba(10,17,40,0.92) 68%, rgba(5, 7, 12, 0.98) 100%),
     linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.65)),
-    url('/assets/bg/snow_mountain_pass.png');
+    url('/assets/bg/intro_snow_pass.png');
   background-size: cover;
   background-position: center;
 }
@@ -817,6 +817,10 @@ body {
   align-items: flex-end;
   pointer-events: none;
   z-index: 4;
+  --character-side-stage: 6%;
+  --character-paired-center-left: 32%;
+  --character-paired-center-right: 68%;
+  --character-sprite-height: 86%;
 }
 
 .character-sprite-wrapper {
@@ -829,12 +833,25 @@ body {
   bottom: 0;
 }
 
-.char-pos-left { left: 15%; }
+.character-sprite-wrapper.is-loading {
+  opacity: 0.96;
+}
+
+.char-pos-left { left: var(--character-side-stage); }
 .char-pos-center { left: 50%; translate: -50% 0; }
-.char-pos-right { right: 15%; }
+.char-pos-right { right: var(--character-side-stage); }
+
+.character-layer.stage-left-center .char-pos-center {
+  left: var(--character-paired-center-right);
+}
+
+.character-layer.stage-center-right .char-pos-center {
+  left: var(--character-paired-center-left);
+}
 
 .character-sprite-img {
-  height: 90%;
+  height: var(--character-sprite-height);
+  max-width: 360px;
   object-fit: contain;
   filter:
     saturate(0.92)
@@ -845,6 +862,55 @@ body {
 }
 
 /* 눈 내리는 캔버스 */
+.admin-skip-panel {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  z-index: 44;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 760px;
+  padding: 6px 7px;
+  border: 1px solid rgba(242, 235, 217, 0.28);
+  background: rgba(10, 11, 13, 0.72);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(4px);
+  font-family: var(--font-sans);
+}
+
+.admin-skip-label {
+  min-width: 70px;
+  color: rgba(242, 235, 217, 0.84);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.admin-skip-panel button {
+  height: 24px;
+  min-width: 34px;
+  padding: 0 7px;
+  border: 1px solid rgba(242, 235, 217, 0.28);
+  background: rgba(30, 30, 30, 0.78);
+  color: rgba(242, 235, 217, 0.9);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+
+.admin-skip-panel button:hover:not(:disabled) {
+  border-color: rgba(255, 213, 107, 0.58);
+  background: rgba(92, 0, 0, 0.74);
+}
+
+.admin-skip-panel button:disabled {
+  opacity: 0.38;
+  cursor: default;
+}
+
 .snow-canvas {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
@@ -1322,7 +1388,7 @@ body {
 }
 
 /* 개발자 모드 / 디버그용 수치 체크 */
-.debug-panel {
+.diagnostic-panel {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -1490,6 +1556,68 @@ body {
 @keyframes cinematicIntroReduced {
   0%, 86% { opacity: 1; }
   100% { opacity: 0; }
+}
+
+.admin-skip-panel {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  right: var(--space-2);
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 32px;
+  padding: var(--space-1);
+  border: 1px solid color-mix(in srgb, var(--hanji-beige-2) 32%, transparent);
+  background: color-mix(in srgb, var(--faded-navy-1) 82%, transparent);
+  color: var(--hanji-beige-2);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  line-height: 1.4;
+  pointer-events: auto;
+}
+
+.admin-skip-label {
+  min-width: 104px;
+  color: var(--lantern-yellow-1);
+  font-family: monospace;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.admin-skip-divider {
+  width: 1px;
+  height: 20px;
+  margin: 0 var(--space-1);
+  background: color-mix(in srgb, var(--hanji-beige-2) 28%, transparent);
+}
+
+.admin-skip-panel button {
+  min-width: 48px;
+  height: 24px;
+  padding: 0 var(--space-2);
+  border: 1px solid color-mix(in srgb, var(--hanji-beige-2) 38%, transparent);
+  background: color-mix(in srgb, var(--ash-grey-1) 78%, transparent);
+  color: var(--hanji-beige-2);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.admin-skip-panel button:hover,
+.admin-skip-panel button:focus-visible {
+  border-color: var(--lantern-yellow-1);
+  color: var(--lantern-yellow-1);
+  outline: none;
+}
+
+.admin-skip-panel button:disabled {
+  border-color: color-mix(in srgb, var(--ash-grey-4) 32%, transparent);
+  color: var(--ash-grey-4);
+  cursor: not-allowed;
 }
 
 @media (prefers-reduced-motion: reduce) {

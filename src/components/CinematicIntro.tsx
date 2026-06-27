@@ -19,14 +19,14 @@ export const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
         <span>疫</span>
       </div>
       <div className="cinematic-shot-strip" aria-hidden="true">
-        <span>병조 밀명</span>
-        <span>눈 속의 시체</span>
-        <span>아이의 숨</span>
+        <span>팔도 봉쇄</span>
+        <span>굶주린 고을</span>
+        <span>종소리와 주술</span>
       </div>
       <div className="cinematic-blood-line" />
       <div className="cinematic-title-card">
-        <span className="cinematic-title-mark">금역의 눈길</span>
-        <span className="cinematic-title-sub">죽은 자가 길을 외운다</span>
+        <span className="cinematic-title-mark">눈 아래의 조선</span>
+        <span className="cinematic-title-sub">죽은 자는 소리를 따라 걷는다</span>
       </div>
       <div className="cinematic-rip" />
     </div>

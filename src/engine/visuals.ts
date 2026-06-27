@@ -18,7 +18,13 @@ export interface RenderedSprite extends ResolvedCharacterVisual {
   readonly phase: SpritePhase;
 }
 
-export const getBgUrl = (bgId: string): string => `/assets/bg/${bgId}.png`;
+export const getBgUrl = (bgId: string): string => {
+  if (bgId.startsWith('cg:')) {
+    return `/assets/cg/${bgId.substring(3)}.png`;
+  }
+
+  return `/assets/bg/${bgId}.png`;
+};
 
 export const getCharacterCode = (charId: string): string => CHARACTER_MAP[charId] || 'sh';
 
@@ -29,7 +35,8 @@ export const getCharacterUrl = (charId: string, expression: string): string => {
 
 export const getDefaultPosition = (charId: string): CharacterPosition => {
   if (charId === '이현') return 'left';
-  if (charId === '소녀') return 'right';
+  if (charId === '서하' || charId === '소녀') return 'right';
+  if (charId === '장덕팔') return 'right';
   return 'center';
 };
 

@@ -106,6 +106,7 @@ All spacing derives from 4px.
 - **Structure**: background layer, snow/effect layer, character layer, UI layer.
 - **Variants**: dissolve, fade, move-in/out, punch, flash.
 - **Motion**: transform, opacity, and filter only.
+- **Sprite scale**: full-body runtime sprites are transparent-trimmed before display; adult figures may use 92-96 percent of the character layer, while child figures stay smaller for staging.
 
 ## 6. Motion & Interaction
 

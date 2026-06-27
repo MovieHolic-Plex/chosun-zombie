@@ -1,277 +1,567 @@
-# ----------------------------------------------------
-# 비주얼 노벨 《역귀야행(逆鬼夜行)》 프롤로그 스크립트
-# 감정선: 이현 hard -> shaken -> protect / 소녀 numb -> flinch -> panic -> trance -> soft
-# ----------------------------------------------------
+# Reboot Prologue - Joseon folk-horror misdirection
 
-# SEQUENCE P1 Cold Open: frozen trail -> sealed outpost -> girl reveal -> first dead pressure -> protector contract
 label scene_001:
-    scene bg snow_mountain_pass with fade
+    scene bg intro_snow_pass with fade
     show effect snow
     play music windy_snow
-    "눈발은 칼등보다 먼저 관복 소매에 들러붙었다."
-    "피는 얼었고, 죽은 자의 발자국만 아직 녹지 않았다."
-    show char 이현 serious at left with moveinleft
-    이현 serious "발자국이 셋."
-    "이현은 무릎을 굽혀 눈밭을 훑었다. 어른 둘, 아이 하나. 그리고 아이 쪽만 끌려간 자국."
-    이현 alert "아이 발자국만 끊겼군."
-    "멀리 고개 아래, 금줄이 묶인 폐초소가 눈 속에 파묻혀 있었다."
+    "경인년 겨울. 길이 먼저 얼고, 그 다음 사람이 얼었다."
+    cinematic cg001_national_collapse with fade
+    "봉수대는 불을 올리지 못했다. 팔도의 고을마다 흰 연기와 검은 연기가 번갈아 섰다."
+    "역병이라 불렀다. 무당은 원혼이라 했고, 조정은 입에 담지 말라 했다."
+    cinematic cg002_refugee_white_breath with dissolve
+    "사람들은 언 길 위로 쏟아져 나왔다. 입김은 희고, 등에 진 짐은 자꾸 가벼워졌다."
+    play sound bell_low
+    "다만 죽은 자들은 굶주림보다 정확한 박자로 움직였다. 북을 치면 멈췄고, 종이 울면 고개를 돌렸다."
+    stop sound
+    "그 까닭을 아는 이는, 없었다."
     jump scene_002
 
 label scene_002:
-    scene bg forbidden_village with fade
-    show char 이현 alert at left with dissolve
-    "초소 앞 장승은 반쯤 불탔다. 붉은 먹으로 쓴 '疫' 자가 눈 속에서도 선명했다."
-    "초소문 안쪽에서 손톱이 나무를 긁는 소리가 났다가, 곧 멎었다."
-    이현 serious "이 고개를 지키던 역졸이면 대답해라."
-    "대답은 없었다. 대신 문틈으로 굳은 피가 한 방울 떨어졌다."
-    menu:
-        "닫힌 초소 안을 뒤져 물자와 흔적을 찾는다":
-            $ humanity += 1
-            $ food += 1
-            jump scene_002_search
-        "소리를 무시하고 고갯길로 오른다":
-            $ suspicion += 1
-            jump scene_002_bypass
-
-label scene_002_search:
-    show effect flash-white
-    "이현은 칼집 끝으로 초소문을 밀었다. 안쪽의 냉기가 사람 숨처럼 흘러나왔다."
-    "뒤주 바닥에서 얼어붙은 누룽지와 피 묻은 약봉지가 나왔다."
-    이현 anxious "내의원 봉인..."
-    "그는 약봉지를 품에 넣었다. 고개 아래 고을은 굶어 죽은 것이 아니었다."
-    jump scene_003
-
-label scene_002_bypass:
-    이현 serious "지금은 산 자를 찾아야 한다."
-    "그는 초소 안의 긁는 소리를 등지고 고갯길로 올라섰다."
+    scene bg intro_refugees with dissolve
+    show effect snow
+    show char 이현 serious at left with moveinleft
+    이현 serious "나는 이현. 명문도 세도도 없는, 작은 가문의 양반이다."
+    이현 serious "현감의 서찰 하나 들고 산을 넘는다. 봉쇄된 고을을 확인하고— 살아 돌아오라는 명이다."
+    이현 anxious "쉬운 명이지. 서찰 끝의 이 한 줄만 아니었다면."
+    이현 anxious "'아이 하나가, 종소리 없이도 죽은 자를 멈춘다.'"
+    이현 serious "미신이다. 사람이 죽고 굶으면, 소문이 늘 먼저 달리는 법이지."
+    "그렇게 접어 두려 했다. 하지만 산길의 피난민들은 하나같이 같은 말을 했다."
+    "소리가 오면 죽은 자가 움직이고, 소리가 끊기면 아이가 운다고."
+    hide char 이현 with dissolve
     jump scene_003
 
 label scene_003:
-    scene bg snow_mountain_pass with fade
+    scene bg intro_refugees with dissolve
     show effect snow
-    show char 이현 serious at left with dissolve
-    "고갯길 중턱, 부서진 가마가 눈에 파묻혀 있었다."
-    "비단 휘장에는 손가락 자국이 깊게 패였고, 가마꾼들의 목은 짐승처럼 뜯겨 있었다."
-    이현 alert "습격은 오래되지 않았다."
-    "이현은 시체 사이를 지나며 숨을 멈췄다. 가마 안쪽에서 아주 작은 숨이 새어 나왔다."
-    menu:
-        "사체와 가마 안쪽을 끝까지 조사한다":
-            $ truth += 1
-            $ medicine += 1
-            jump scene_003_search
-        "가마만 살피고 바로 물러난다":
-            jump scene_003_pass
-
-label scene_003_search:
-    "죽은 장정의 손에는 찢어진 처방전이 쥐여 있었다."
-    "글자는 피에 번졌지만 두 글자만은 남아 있었다. '시험'."
-    이현 anxious "사람을 약으로 시험했다는 말인가."
-    jump scene_004
-
-label scene_003_pass:
-    "피 냄새가 너무 짙었다. 이현은 시체를 더 뒤지지 않고 가마의 찢어진 휘장만 젖혔다."
+    show char 장덕팔 wary at right with moveinright
+    장덕팔 wary "나리, 저 아래 좀 보십쇼. 저게 길입니까, 장례 행렬이지."
+    장덕팔 wary "관군은 무당한테 떠넘기고, 무당은 관군한테 떠넘기고. 아주 떠넘기기 굿을 합디다."
+    show char 이현 serious at left with moveinleft
+    이현 serious "초소는."
+    장덕팔 startled "초소요? 구휼 막는 울타리지, 그게 무슨 초솝니까. 죽은 놈 묻는 구덩이보다 산 놈 막는 말뚝이 더 많습디다."
+    "덕팔은 내 집안 마름이다. 입은 거칠어도, 겁을 농담 뒤에 숨길 줄 아는 재주가 있었다."
+    이현 alert "그럼 우리가 볼 건, 울타리 안쪽이군."
+    장덕팔 wary "...나리. 그 안에서 살아 나온 놈이 없다는 것도, 좀 보셔야 할 겁니다."
+    hide char 장덕팔 with moveoutright
+    hide char 이현 with dissolve
     jump scene_004
 
 label scene_004:
-    show char 이현 alert at left with dissolve
-    "휘장 뒤에서 먼저 보인 것은 얼굴이 아니었다. 깨진 나무판 아래, 너무 작은 손끝이 눈 위에 걸려 있었다."
-    "손끝은 얼어붙은 듯 하얬지만, 손톱 밑에는 새 피가 남아 있었다."
-    이현 alert "듣고 있느냐."
-    "대답 대신 숨이 한 번 멎었다."
-    menu:
-        "칼끝을 먼저 들이밀어 정체를 확인한다":
-            $ suspicion += 1
-            jump scene_004_threat
-        "칼을 낮추고 낮은 목소리로 부른다":
-            $ trust_girl += 1
-            jump scene_004_call
-
-label scene_004_threat:
-    show effect shake
-    이현 angry "나와라. 산 자든 죽은 자든, 셋을 세겠다."
-    "나무판 아래에서 작은 몸이 움찔했다."
-    jump scene_005
-
-label scene_004_call:
-    이현 neutral "괜찮다. 손을 다쳤다면 내가 꺼내주마."
-    "나무판 아래에서 아이가 아주 천천히 고개를 들었다."
+    scene bg intro_snow_pass with fade
+    show effect snow
+    cinematic cg022_final_snow with fade
+    show char 이현 anxious at left with dissolve
+    이현 anxious "...이상하군."
+    이현 serious "굶주린 마을은 부산한 법이다. 그런데 저 굴뚝들, 연기 높이가 전부 똑같다."
+    이현 anxious "누가 모든 아궁이에 똑같은 장작을, 똑같이 넣은 것처럼."
+    "그 정갈함이 오히려 흉했다."
+    play sound bell_low
+    이현 alert "...바람이 멎었는데, 방울 소리?"
+    "나는 그 소리를 들은 적 없다고 생각했다. 그런데 몸은 이미, 그 박자를 알고 있었다."
+    stop sound
+    hide char 이현 with dissolve
     jump scene_005
 
 label scene_005:
-    show char 소녀 numb at right with moveinright
-    "아이는 스스로 걸어나오지 않았다. 부서진 가마틀 밑에서 미끄러지듯 밀려나와 눈 위에 무릎을 꿇었다."
-    "비단 저고리는 양반가 아이의 것이었지만, 소매 끝에는 관아 창고의 봉랍 조각이 말라붙어 있었다."
-    "소녀는 울지 않았다. 울 힘을 잃은 사람의 눈으로 이현의 칼끝만 보고 있었다."
-    소녀 numb "여기가... 한양이에요?"
-    이현 alert "이 고개를 넘으면 한양이라 배웠느냐."
-    소녀 numb "검은 갓들이... 그렇게 말했어요."
-    "이현의 손이 칼자루 위에서 멈췄다."
-    menu:
-        "손을 내밀어 가마 밖으로 끌어낸다":
-            $ trust_girl += 1
-            jump scene_005_help
-        "거리를 두고 상처부터 확인한다":
-            $ suspicion += 1
-            jump scene_005_question
-
-label scene_005_help:
-    show char 이현 neutral at left with dissolve
-    show char 소녀 flinch at right with dissolve
-    이현 neutral "이리 와라. 발이 얼었다."
-    "이현이 손을 내밀자 소녀는 반사적으로 몸을 움츠렸다. 맞아본 아이의 움직임이었다."
-    이현 anxious "..."
-    jump scene_006
-
-label scene_005_question:
+    scene bg sealed_outpost with fade
+    show effect snow
+    cinematic cg003_outpost_bell with fade
     show char 이현 serious at left with dissolve
-    show char 소녀 flinch at right with dissolve
-    이현 serious "물린 데가 있느냐. 숨기면 둘 다 죽는다."
-    소녀 flinch "물리지 않았어요. 정말이에요."
-    "소녀는 손목을 등 뒤로 감췄다."
+    이현 serious "문을 열어라. 현감의 명이다."
+    "안에서는 아무 대답도 없었다. 부적만 문짝에 겹겹이 붙어, 바람도 없는데 붉은 실이 같은 쪽으로 떨었다."
+    show char 장덕팔 wary at right with dissolve
+    장덕팔 wary "나리, 저 금줄 매듭 좀 보십쇼."
+    이현 alert "매듭이 뭐."
+    장덕팔 startled "사람 손으로 묶은 모양이 아닙니다. 너무... 곧아요. 자로 잰 것처럼요."
+    이현 serious "곧은 게 무슨 죄냐."
+    장덕팔 wary "나리, 흉한 일은 늘 지나치게 반듯합디다. 이건 제 경험이에요."
+    hide char 장덕팔 with dissolve
+    hide char 이현 with dissolve
     jump scene_006
 
 label scene_006:
-    show char 이현 alert at left with dissolve
-    show char 소녀 panic at right with dissolve
-    show char 역귀 neutral at center with dissolve
-    "숲의 어둠이 일제히 움직였다."
-    "꺾인 허리, 풀린 동공, 이빨 사이에 낀 검은 피. 역귀 셋이 눈밭을 기어 나왔다."
-    소녀 panic "숨을 못 쉬겠어요..."
-    이현 protect "내 뒤로."
-    "그때 소녀가 한 걸음 앞으로 나갔다. 역귀들의 고개가 동시에 숙여졌다."
-    show char 소녀 trance at right with dissolve
-    소녀 trance "오지 마."
-    "아이의 목소리는 작았다. 그러나 역귀들은 그대로 멈췄다."
-    menu:
-        "소녀를 끌어안고 바위 뒤로 숨는다":
-            $ trust_girl += 1
-            $ daughter_attachment += 1
-            jump scene_006_hide
-        "역귀와 소녀의 반응을 지켜본다":
-            $ suspicion += 2
-            jump scene_006_observe
-
-label scene_006_hide:
-    show char 이현 protect at left with dissolve
-    show char 소녀 flinch at right with dissolve
-    hide char 역귀 with dissolve
-    "이현은 소녀의 어깨를 감싸쥐고 눈 덮인 바위 뒤로 몸을 던졌다."
-    "품 안의 아이는 소리 없이 떨었다. 역귀들은 냄새를 잃은 짐승처럼 주위를 맴돌다 사라졌다."
-    이현 protect "숨 쉬어라. 천천히."
-    jump scene_007
-
-label scene_006_observe:
-    show char 이현 anxious at left with dissolve
-    show char 소녀 trance at right with dissolve
-    "이현은 칼을 든 채 한 걸음 물러났다."
-    "소녀가 눈을 깜박이자, 역귀 하나가 무릎을 꿇었다."
-    이현 anxious "너는... 무엇을 데리고 있는 거냐."
-    hide char 역귀 with dissolve
+    scene bg sealed_outpost with dissolve
+    show effect snow
+    show char 이현 serious at left with dissolve
+    "문틈 아래로 종이 한 장이 밀려 나왔다. 피처럼 보였으나 피가 아니라, 먹과 재와 말린 약초가 엉긴 얼룩이었다."
+    이현 serious "...읽어 보겠다."
+    이현 anxious "'산 자는 소리를 낮춰라. 죽은 자는 소리를 따른다.'"
+    이현 anxious "'아이를 보거든, 문을 닫지 마라.'"
+    이현 alert "아이라."
+    play sound drum_low
+    show effect flash-white
+    "마지막 줄을 읽는 순간, 초소 안쪽의 목들이 한꺼번에 같은 방향으로 돌아갔다."
+    stop sound
+    hide char 이현 with dissolve
     jump scene_007
 
 label scene_007:
-    show char 소녀 flinch at right with dissolve
-    "소녀가 정신을 차린 순간, 손목을 붙잡고 주저앉았다."
-    "소매 안쪽에는 부적 같은 검은 낙인이 살갗 아래 박혀 있었다."
-    소녀 flinch "보지 마세요."
-    이현 serious "누가 새겼느냐."
-    소녀 panic "말하면, 다시 데리러 와요."
-    menu:
-        "목소리를 낮추고 낙인에 대해 묻는다":
-            $ trust_girl += 1
-            jump scene_007_ask
-        "소매를 덮어주고 질문을 멈춘다":
-            $ suspicion += 1
-            jump scene_007_skip
-
-label scene_007_ask:
-    show char 이현 sad at left with dissolve
-    이현 sad "나는 네 편이라고 말할 수는 없다. 아직은."
-    이현 serious "하지만 지금 여기서 너를 넘기지는 않는다."
-    소녀 flinch "검은 갓... 흰 장막... 긴 침..."
-    jump scene_008
-
-label scene_007_skip:
-    show char 이현 serious at left with dissolve
-    "이현은 소녀의 소매를 조용히 내려주었다."
-    이현 serious "좋다. 묻지 않겠다. 대신 숨기지도 마라."
-    소녀 numb "네."
+    scene bg sealed_outpost with dissolve
+    show effect snow
+    play sound bell_low
+    cinematic cg006_seoha_first_bell with dissolve
+    show char 이현 alert at left with hpunch
+    이현 alert "방울. ...덕팔, 칼 뽑지 마라."
+    "그러나 덕팔의 칼은 이미 반쯤 나와 있었다. '나리, 저게 사람입니까!'"
+    show char 서하 numb at center with dissolve
+    "금줄 아래로, 아이 하나. 발목까지 젖은 치마, 손등의 검은 점, 눈 밑의 오래된 피로."
+    서하 numb "아저씨, 숨 참아요. 안 그러면 저 사람들이 따라와요."
+    show effect flash-white
+    stop sound
+    "초소 안의 신음이, 거짓말처럼 뚝 멎었다."
+    이현 alert "...방금, 뭘 한 거냐."
+    서하 numb "아무것도요. 종이 아직 안 울렸으니까."
+    이현 serious "이름."
+    서하 numb "서하."
+    이현 serious "어디서 왔느냐."
+    서하 trance "소리가 데려온 곳에서요."
+    hide char 서하 with dissolve
+    hide char 이현 with dissolve
     jump scene_008
 
 label scene_008:
-    show char 소녀 numb at right with dissolve
-    "소녀는 제 이름을 기억하지 못했다."
-    "다만 한 가지 소리만 기억했다. 쇠쟁반 위에 놓인 침들이 서로 부딪히는 소리."
-    소녀 numb "깨어나면 사방이 흰 베로 가려져 있었어요."
-    소녀 flinch "사람들이 제 피를 그릇에 받았어요."
-    show char 소녀 trance at right with dissolve
-    소녀 trance "그리고 밤마다... 죽은 사람들이 제 노래를 들으러 왔어요."
-    이현 anxious "역귀를 부른 것이 아니라, 잠재운 건가."
-    $ truth += 1
+    scene bg sealed_outpost with dissolve
+    show effect snow
+    show char 장덕팔 wary at right with dissolve
+    장덕팔 wary "나리, 저 아이 데려가면 안 됩니다."
+    장덕팔 startled "초소 병사들이 아이를 보더니, 다들 숨을 참았다고요. 산 사람이 숨을 못 쉽니다."
+    show char 이현 serious at left with dissolve
+    이현 serious "병사들이 숨을 참은 거지, 아이가 숨을 훔친 건 아니다."
+    장덕팔 wary "그 차이를 누가 증명합니까, 나리."
+    이현 alert "내가."
+    "덕팔은 대답하지 못했다. 우리 사는 세상에서 증명은 늘 늦고, 두려움은 늘 먼저 도착한다."
+    hide char 장덕팔 with dissolve
+    hide char 이현 with dissolve
     jump scene_009
 
 label scene_009:
-    show char 이현 alert at left with dissolve
-    show char 소녀 panic at right with dissolve
-    "산등성이 아래에서 횃불이 올라왔다."
-    "불빛마다 검은 갓의 그림자가 붙어 있었다. 추적자는 길을 잘못 들지 않았다."
-    소녀 panic "저 사람들이에요."
-    이현 alert "숨을 곳을 고른다. 지금."
-    menu:
-        "계곡 아래 바위 틈으로 숨어든다":
-            $ humanity += 1
-            jump scene_009_hide
-        "눈 위의 발자국을 끊고 험한 숲길로 우회한다":
-            $ authority_alert += 1
-            jump scene_009_bypass
-
-label scene_009_hide:
-    show char 이현 protect at left with dissolve
-    show char 소녀 flinch at right with dissolve
-    "이현은 소녀의 입을 손바닥으로 가리고 바위 틈새로 밀려 들어갔다."
-    "추적자의 발끝이 머리 위 눈을 밟았다. 소녀는 숨을 삼킨 채 버텼다."
-    이현 protect "잘했다."
-    jump scene_010
-
-label scene_009_bypass:
-    show char 이현 wounded at left with dissolve
-    show char 소녀 panic at right with dissolve
-    "두 사람은 가시덤불을 뚫고 숲길로 빠졌다."
-    "이현의 뺨에 피가 맺혔고, 소녀의 숨은 점점 짧아졌다."
-    이현 wounded "조금만 더."
+    cinematic cg004_oath_under_snow with fade
+    서하 numb "저를 묶지 마세요."
+    "부탁이 아니었다. 여러 번 묶여 본 아이의, 확인이었다."
+    이현 sad "묶지 않는다."
+    서하 soft "거짓말이면, 죽은 사람들이 먼저 알아요."
+    이현 serious "그럼 죽은 자들도 듣게 말하마. ...묶지 않는다."
+    "그 한마디가 눈 위에 떨어졌다. 초소 안에서 젖은 숨소리가 길게 새어 나왔다. 안도인지 분노인지, 알 수 없는 소리였다."
     jump scene_010
 
 label scene_010:
+    scene bg sealed_outpost with fade
+    show effect snow
+    cinematic cg003_outpost_bell with fade
+    "문이 조금 열렸다. 안에는 살아 있는 병사 셋과, 살아 있기를 포기한 병사 여럿."
+    "칼집엔 금줄이 감겼고, 밥그릇엔 재가 수북했다. 그들은 굶어 죽은 자를 칼로 막지 않았다. 소리로 막고 있었다."
     show char 이현 serious at left with dissolve
-    show char 소녀 numb at right with dissolve
-    "눈보라가 잦아들자, 오히려 추위가 선명해졌다."
-    "이현은 소녀의 손을 보았다. 손가락 끝이 파랗게 질려 있었다."
-    이현 serious "여기서부터는 더 위험하다. 따라오면 죽을 수도 있다."
-    show char 소녀 soft at right with dissolve
-    소녀 soft "그래도... 혼자 있으면, 다시 흰 장막 안으로 끌려가요."
-    "이현은 대답하지 않았다."
-    "죽은 딸의 마지막 손도 저만큼 차가웠다."
+    이현 serious "누가 이 방법을 가르쳤느냐."
+    "병사는 내 뒤의 아이를 보지 않으려 애쓰며, 마룻바닥의 점무늬를 가리켰다."
+    이현 alert "이 점들이?"
+    "'하늘이 내려 주신 자리라 했습니다.' 병사의 목소리는 대답보다 기도에 가까웠다."
+    hide char 이현 with dissolve
+    jump scene_011
+
+label scene_011:
+    scene bg sealed_outpost with dissolve
+    show effect snow
+    cinematic cg007_unseen_watcher_marks with dissolve
+    show char 서하 trance at right with dissolve
+    서하 trance "하늘 아니에요."
+    show char 이현 alert at left with dissolve
+    이현 alert "그럼 뭐냐."
+    서하 trance "멀어요."
+    이현 serious "산 너머냐."
+    서하 numb "아주, 멀어요."
+    "아이가 눈을 감자, 눈꺼풀 아래에서 검은 점들이 희미하게 떨렸다."
+    이현 anxious "무당들이 말하는 천안(天眼)인가."
+    서하 numb "이름은 안 가르쳐 줬어요. 그치만... 자꾸 더 보고 싶어 해요."
+    "더 보고 싶어 한다. 그 말이, 미신보다 차가웠다."
+    hide char 서하 with dissolve
+    hide char 이현 with dissolve
+    jump scene_012
+
+label scene_012:
+    scene bg sealed_outpost with fade
+    show effect snow
     menu:
-        "소녀의 손을 잡고 함께 간다":
+        "서하를 먼저 감싼다":
             $ trust_girl += 1
-            $ daughter_attachment += 1
-            jump scene_010_accompany
-        "거리를 두되 뒤따라오게 한다":
-            $ suspicion += 1
-            jump scene_010_follow
+            $ humanity += 1
+            jump scene_013_protect
+        "초소 병사에게 기록을 요구한다":
+            $ authority_alert += 1
+            $ truth += 1
+            jump scene_013_record
 
-label scene_010_accompany:
+label scene_013_protect:
+    scene bg sealed_outpost with dissolve
+    show effect snow
     show char 이현 protect at left with dissolve
-    show char 소녀 soft at right with dissolve
-    이현 protect "내 발자국만 밟아라."
-    소녀 soft "놓지 않을게요."
-    "이현은 작은 손을 잡았다. 얼음처럼 차가웠고, 이상하게도 맥은 또렷했다."
-    jump scene_011
+    이현 protect "서하는 내 뒤에 선다."
+    show char 서하 numb at right with dissolve
+    서하 numb "뒤에 서면, 소리가 더 크게 들려요."
+    이현 sad "그래도 네 앞엔 안 세운다."
+    "그 약속 하나가 초소의 공기를 바꾸었다. 병사들은 더 이상 아이를 괴물이라 부르지 못했다."
+    서하 soft "나리도 무서워요?"
+    이현 serious "무섭다."
+    서하 numb "그런데 왜 손을 내밀어요."
+    이현 serious "무섭다고 해서, 손까지 없어지는 건 아니니까."
+    hide char 서하 with dissolve
+    hide char 이현 with dissolve
+    jump scene_014
 
-label scene_010_follow:
+label scene_013_record:
+    scene bg sealed_outpost with dissolve
+    show effect snow
+    show char 이현 alert at left with dissolve
+    이현 alert "초소 기록을 내라. 누가 죽고 누가 살았는지, 적어야 한다."
+    show char 장덕팔 wary at right with dissolve
+    장덕팔 wary "나리, 종이고 먹이고 다 젖었습니다."
+    이현 serious "젖은 기록이, 없는 기록보단 낫다."
+    "병사가 바닥의 부적을 뜯어 뒤집었다. 뒷면엔 사람 이름이 아니라, 박자와 방향이 적혀 있었다."
+    장덕팔 startled "...나리, 이건 장부가 아닌데요."
+    이현 alert "그래. 장부보다 더 오래 숨겨 온 글이다."
+    hide char 장덕팔 with dissolve
+    hide char 이현 with dissolve
+    jump scene_014
+
+label scene_014:
+    scene bg intro_snow_pass with fade
+    show effect snow
+    cinematic cg003_outpost_bell with dissolve
+    "초소를 떠나며, 우리는 금줄 하나를 끊었다."
+    play sound bell_low
+    "그 순간, 산 아래에서 종소리가 났다. 아주 낮고, 아주 먼 소리."
+    show char 장덕팔 startled at right with dissolve
+    장덕팔 startled "나리! 저, 저 시체들 손가락— 같이 굽혀집니다, 박자 맞춰서!"
+    show char 이현 alert at left with dissolve
+    이현 alert "보았다."
+    stop sound
+    장덕팔 wary "...방금 저 아이가 움직인 것도, 보셨습니까."
+    이현 serious "아이를 탓하기엔, 종이 먼저 울렸다."
+    hide char 장덕팔 with dissolve
+    hide char 이현 with dissolve
+    jump scene_015
+
+label scene_015:
+    scene bg intro_snow_pass with dissolve
+    show effect snow
+    show char 서하 trance at right with dissolve
+    서하 trance "종 아니에요."
     show char 이현 serious at left with dissolve
-    show char 소녀 numb at right with dissolve
-    이현 serious "소매는 잡지 마라. 대신 내 그림자를 놓치지 마."
-    소녀 numb "네."
-    "그는 앞장섰고, 아이는 조금 떨어져 그 발자국을 밟았다."
-    jump scene_011
+    이현 serious "그럼 방울이냐."
+    서하 numb "둘 다 아니에요."
+    이현 alert "그럼 뭐가 울린 거냐."
+    서하 trance "질문이요."
+    이현 alert "질문이... 울려?"
+    서하 numb "누가 묻고 있어요. '어디까지 움직일 수 있느냐'고."
+    "나는 그 말을 굿판의 은유로 들었다. 그렇게라도 들어야, 다음 걸음을 뗄 수 있었다."
+    hide char 서하 with dissolve
+    hide char 이현 with dissolve
+    jump scene_016
+
+label scene_016:
+    scene bg forbidden_village with fade
+    show effect snow
+    show char 이현 serious at left with dissolve
+    show char 장덕팔 wary at right with dissolve
+    "첫 마을은 비어 있었다. 문마다 같은 길이의 새끼줄, 우물가엔 재로 그린 원. 원 안엔 별자리 같은 점들이 찍혀 있었다."
+    이현 serious "...이건 부적이군."
+    장덕팔 wary "부적은요. 저는 장부로 보입니다, 나리. 누가 칸 맞춰 적어 놓은 것처럼요."
+    hide char 장덕팔 with dissolve
+    show char 서하 numb at center with dissolve
+    서하 numb "둘 다 아니에요. ...눈이에요. 여기를 보려고, 누가 그려 둔 눈."
+    이현 anxious "누가 이렇게 정성껏 마을을 버렸나."
+    "대답은 없었다."
+    hide char 서하 with dissolve
+    hide char 이현 with dissolve
+    jump scene_017
+
+label scene_017:
+    scene bg forbidden_village with dissolve
+    show effect snow
+    show char 서하 numb at right with dissolve
+    서하 numb "여기, 아직 듣고 있어요."
+    show char 이현 alert at left with dissolve
+    이현 alert "누가."
+    서하 trance "벽이요. 마룻장도요."
+    이현 serious "굿판에서 흔히 하는 말이다."
+    서하 soft "굿판은 끝나면, 사람들이 집에 가잖아요."
+    서하 numb "여긴 끝났는데도, 아무도 못 갔어요."
+    "부서진 사립문 너머, 눈 위의 발자국은 많았지만— 시작도 끝도 없었다."
+    hide char 서하 with dissolve
+    hide char 이현 with dissolve
+    jump scene_018
+
+label scene_018:
+    scene bg forbidden_village with dissolve
+    show effect snow
+    show char 장덕팔 wary at right with dissolve
+    장덕팔 wary "나리, 쌀독은 텅 비었는데, 밥그릇은 죄다 같은 자리에 놓였습니다. 자로 잰 것처럼요."
+    show char 이현 serious at left with dissolve
+    이현 serious "굶어 죽는 집에서, 밥그릇을 줄 맞추는 일은 없다."
+    장덕팔 startled "게다가 나리, 시체가 한 구도 없습니다."
+    이현 alert "...그게 더 나쁘군."
+    "마을이 비었다면 산 자가 떠난 것이고, 시체가 없다면 죽은 자도 떠난 것이다. 두 행렬이 같은 길을 택했는지는, 아직 알 수 없었다."
+    hide char 장덕팔 with dissolve
+    hide char 이현 with dissolve
+    jump scene_019
+
+label scene_019:
+    scene bg forbidden_village with fade
+    show effect snow
+    show char 이현 anxious at left with dissolve
+    "우물 안엔 물 대신 부적 조각이 가라앉아 있었다. 조각마다 검은 점, 그 점들은 종이가 달라도 같은 간격을 지켰다."
+    이현 anxious "점이... 너무 고르다. 우연이라기엔, 너무 검소해."
+    play sound bell_low
+    "말을 끝내기도 전, 우물 아래에서 어린 목소리가 또렷이 올라왔다. '늦었어.'"
+    stop sound
+    hide char 이현 with dissolve
+    jump scene_020
+
+label scene_020:
+    scene bg forbidden_village with dissolve
+    show effect snow
+    cinematic cg010_well_talisman_voice with dissolve
+    show char 서하 flinch at right with dissolve
+    서하 flinch "듣지 마세요."
+    show char 이현 alert at left with dissolve
+    이현 alert "방금, 네 목소리였다."
+    서하 panic "제 목소리예요. 근데 제가 말한 게 아니에요. ...빌려 간 거예요."
+    "우물은 비어 있었고, 아이는 내 옆에 있었다. 그런데 우물 아래의 목소리는, 분명 서하였다."
+    이현 protect "덕팔은 부르지 마라."
+    서하 numb "부르면, 셋이 들어요."
+    이현 serious "그럼 둘만 듣겠다."
+    서하 soft "둘이면... 아직 거짓말할 수 있어요."
+    hide char 서하 with dissolve
+    hide char 이현 with dissolve
+    jump scene_021
+
+label scene_021:
+    scene bg forbidden_village with dissolve
+    show effect snow
+    menu:
+        "우물의 부적을 걷어 낸다":
+            $ truth += 1
+            $ suspicion += 1
+            jump scene_022_well
+        "우물을 봉하고 마을을 빠져나간다":
+            $ humanity += 1
+            $ trust_girl += 1
+            jump scene_022_leave
+
+label scene_022_well:
+    scene bg forbidden_village with dissolve
+    show effect snow
+    show char 이현 alert at left with dissolve
+    이현 alert "부적을 걷는다. 손대지 말고— 칼끝으로."
+    "종이 조각이 흩어지자, 우물 아래의 목소리가 높아졌다. '왜 멈췄지. 왜 더 보지 않지.'"
+    show char 서하 trance at right with dissolve
+    서하 trance "그 말, 저한테 하는 거 아니에요."
+    이현 serious "그럼 누구한테."
+    서하 numb "자기 자신한테요."
+    hide char 서하 with dissolve
+    hide char 이현 with dissolve
+    jump scene_023
+
+label scene_022_leave:
+    scene bg forbidden_village with dissolve
+    show effect snow
+    show char 이현 serious at left with dissolve
+    이현 serious "우물은 봉한다. 산 사람 목숨이 먼저다."
+    show char 서하 soft at right with dissolve
+    서하 soft "그럼 저 소리, 안 따라와요?"
+    이현 sad "따라와도, 우리가 먼저 걷는다."
+    "서하가 처음으로 고개를 끄덕였다. 그 작은 움직임에, 우물 속 목소리가 잠시 끊겼다."
+    "우리가 이긴 건 아니었다. 다만 누군가의 관심이, 잠시 다른 곳으로 옮겨 간 듯했다."
+    hide char 서하 with dissolve
+    hide char 이현 with dissolve
+    jump scene_023
+
+label scene_023:
+    scene bg intro_snow_pass with fade
+    show effect snow
+    show char 장덕팔 wary at right with dissolve
+    "마을을 벗어나자 눈발이 거세졌다. 길 위엔 버린 짐이 이어졌다. 솥, 신발, 어린아이 저고리, 반쯤 찢긴 호패."
+    장덕팔 wary "나리... 그 아이가 말한 '보는 자'가, 진짜로 있으면 어쩝니까."
+    show char 이현 serious at left with dissolve
+    이현 serious "무당의 눈일 수도 있다."
+    장덕팔 startled "무당이 산을 통째로 봅니까?"
+    이현 anxious "...그러니 더, 무당 탓을 하고 싶은 거다."
+    hide char 장덕팔 with dissolve
+    hide char 이현 with dissolve
+    jump scene_024
+
+label scene_024:
+    scene bg intro_refugees with dissolve
+    show effect snow
+    show char 이현 protect at left with dissolve
+    show char 서하 numb at right with dissolve
+    "피난민들은 서하를 보자 길을 비켰다. 그 눈엔 증오보다 기대가 많았다. 괴물이라 부르면서도, 그 괴물이 자길 구해 주길 바라는 눈."
+    이현 protect "아이에게 묻지 마라."
+    "늙은 여인 하나가 내 앞에 엎드렸다. '한 번만, 한 번만 울려 주십시오. 우리 아들이 아직 뒤를 따라옵니다.'"
+    서하 panic "저는... 울릴 수 없어요."
+    이현 sad "울려서는 안 되는 것도, 있다."
+    hide char 서하 with dissolve
+    hide char 이현 with dissolve
+    jump scene_025
+
+label scene_025:
+    cinematic cg008_dead_follow_drum with fade
+    play sound drum_low
+    "여인의 아들은 정말로 뒤따라오고 있었다. 살아 있을 때의 절뚝임까지 흉내 내며. 그러나 그의 눈은 어머니를 보지 않았다. 서하의 손등만, 보았다."
+    이현 wounded "덕팔. 사람들 뒤로."
+    장덕팔 loyal "예, 나리!"
+    "덕팔이 떨리는 손으로 사람들을 밀어내는 순간, 죽은 아들이 무릎을 꿇었다. 북소리도 없는데, 그 박자에 맞춰."
+    stop sound
+    jump scene_026
+
+label scene_026:
+    scene bg intro_refugees with dissolve
+    show effect snow
+    cinematic cg011_dead_son_question with dissolve
+    show char 서하 trance at right with dissolve
+    서하 trance "저 사람, 저를 보는 게 아니에요."
+    show char 이현 alert at left with dissolve
+    이현 alert "그럼 네 손등의 점을 보느냐."
+    서하 numb "점 너머를요."
+    "죽은 아들의 입에서 피 대신 눈이 흘렀다. 말은 못 했지만, 목구멍 깊은 곳에서 일정한 두드림이 났다."
+    서하 trance "또 같은 질문이에요."
+    이현 serious "'어디까지 움직일 수 있느냐.'"
+    서하 numb "이번엔... '어디까지 사랑할 수 있느냐'고 물어요."
+    hide char 서하 with dissolve
+    hide char 이현 with dissolve
+    jump scene_027
+
+label scene_027:
+    scene bg intro_refugees with dissolve
+    show effect snow
+    menu:
+        "어머니가 아들에게 작별하게 한다":
+            $ humanity += 1
+            $ trust_girl += 1
+            jump scene_028_farewell
+        "죽은 자를 즉시 베어 피난민을 지킨다":
+            $ authority_alert += 1
+            $ allies += 1
+            jump scene_028_cut
+
+label scene_028_farewell:
+    scene bg intro_refugees with dissolve
+    show effect snow
+    cinematic cg012_mother_farewell with dissolve
+    show char 이현 sad at left with dissolve
+    이현 sad "가까이 가진 마시오. 그러나— 말은 하시오."
+    "어머니가 눈 위에 엎드려 아들의 이름을 불렀다. 죽은 자는, 움직이지 않았다. 이름이 명령보다 오래된 소리였기 때문일까."
+    show char 서하 soft at right with dissolve
+    서하 soft "지금은 질문이 멈췄어요."
+    이현 serious "그럼 지금 가야 한다."
+    서하 numb "대답 기다리는 건, 오래 못 참아요."
+    hide char 서하 with dissolve
+    hide char 이현 with dissolve
+    jump scene_029
+
+label scene_028_cut:
+    scene bg intro_refugees with dissolve
+    show effect snow
+    show char 이현 angry at left with dissolve
+    이현 angry "다들 물러나라!"
+    show effect flash-white
+    cinematic cg013_hard_choice_aftermath with dissolve
+    "칼이 죽은 자의 목을 끊자, 피난민들의 울음도 끊겼다. 한 생명을 두 번 죽이는 일은, 칼보다 무거웠다."
+    show char 서하 flinch at right with dissolve
+    서하 flinch "지금, 질문이 바뀌었어요."
+    이현 wounded "무엇으로."
+    서하 numb "'무엇까지 끊을 수 있느냐'고요."
+    hide char 서하 with dissolve
+    hide char 이현 with dissolve
+    jump scene_029
+
+label scene_029:
+    scene bg abandoned_inn with fade
+    cinematic cg005_inn_sickroom with fade
+    "밤이 깊어서야 버려진 주막에 닿았다. 마당엔 빈 술독이 줄지어 놓였고, 처마엔 부적이 말라붙어 있었다."
+    show char 장덕팔 wary at right with dissolve
+    장덕팔 wary "오늘은 여기서 버텨야 합니다. ...아이고, 다리야."
+    show char 이현 serious at left with dissolve
+    이현 serious "문은 둘, 창은 셋, 뒷간 쪽 담은 낮다."
+    장덕팔 loyal "나리는 겁나면 꼭 숫자를 세십니다. 어릴 적부터 그랬지요."
+    이현 anxious "숫자는, 적어도 거짓말을 덜 한다."
+    장덕팔 loyal "그 숫자가 술독 개수면 좋겠습니다만. ...빈 독이라 더 서럽네요."
+    "덕팔이 처음으로 픽 웃었고, 나도 따라 웃을 뻔했다. 그 잠깐이, 그날 밤 우리가 가진 전부였다."
+    hide char 장덕팔 with dissolve
+    hide char 이현 with dissolve
+    jump scene_030
+
+label scene_030:
+    cinematic cg009_child_marks with dissolve
+    "서하는 가장 안쪽 방에 앉았다. 손등엔 낮보다 많은 점이 떠올라, 작은 벌레처럼 자리를 옮겼다."
+    scene bg abandoned_inn with dissolve
+    show char 서하 numb at right with dissolve
+    show char 이현 serious at left with dissolve
+    이현 serious "아픈 것이냐."
+    서하 numb "보는 게 많아지면, 이렇게 돼요."
+    이현 alert "...사람 말이냐."
+    서하 trance "사람처럼 묻는 것들이요."
+    이현 serious "무당의 신령인가."
+    서하 soft "나리는 자꾸, 아는 말로 모르는 걸 덮어요."
+    "그 말이 아팠다. 나는 정말, 그러고 있었다."
+    hide char 서하 with dissolve
+    hide char 이현 with dissolve
+    jump scene_031
+
+label scene_031:
+    scene bg abandoned_inn with dissolve
+    cinematic cg005_inn_sickroom with dissolve
+    "밤이 깊자, 주막 벽의 부적들이 차례로 젖었다. 바깥은 눈뿐인데, 종이는 물에서 건진 듯 축축했다."
+    "검은 점들이 번져 서로를 찾아갔다. 지도 같기도, 별자리 같기도 했다."
+    show char 이현 anxious at left with dissolve
+    이현 anxious "무당이 그렸다면 굿판이고, 의원이 그렸다면 병세 기록일 텐데."
+    이현 serious "...나는 둘 중 하나이기를, 빌었다."
+    hide char 이현 with dissolve
+    jump scene_032
+
+label scene_032:
+    scene bg abandoned_inn with dissolve
+    show char 이현 alert at left with dissolve
+    이현 alert "불을 낮춰라."
+    show char 장덕팔 wary at right with dissolve
+    장덕팔 wary "불 낮추면, 사람이 더 무섭습니다 나리."
+    이현 serious "바깥 것들이 우리보다 귀가 밝다면, 사람 무서운 건 참을 수 있다."
+    장덕팔 startled "...바깥에, 귀가 있습니까."
+    play sound drum_low
+    "대답 대신, 처마 밑에서 발소리가 났다. 하나가 아니었다. 여럿도 아니었다. 같은 하나가, 여러 번 겹쳐 들렸다."
+    stop sound
+    hide char 장덕팔 with dissolve
+    hide char 이현 with dissolve
+    jump scene_033
+
+label scene_033:
+    scene bg abandoned_inn with dissolve
+    show char 서하 panic at right with dissolve
+    서하 panic "문 열면 안 돼요."
+    show char 이현 protect at left with dissolve
+    이현 protect "안 연다."
+    서하 flinch "안 열어도, 들어와요."
+    "아이의 말이 끝나자 문풍지가 안쪽으로 부풀었다. 바깥의 숨이 아니라, 방 안 공기가 누군가를 맞으러 나가는 모양이었다."
+    이현 alert "서하, 눈 감아라."
+    서하 trance "감으면, 더 잘 보여요."
+    "나는 칼을 쥐었다. 그러나 칼은, 소리를 베지 못한다."
+    hide char 서하 with dissolve
+    hide char 이현 with dissolve
+    jump scene_034
+
+label scene_034:
+    scene bg abandoned_inn with fade
+    cinematic cg014_door_sigil_laughter with dissolve
+    "문풍지 위로 점들이 떠올랐다. 부적의 먹점, 서하의 손등, 우물 속 종이 조각— 모두 같은 꼴이었다."
+    "점들이 한순간 글자가 되려 했다. 그러나 우리가 읽을 수 없는 글자였다. 그래서 우리는 그것을, 주문이라 부를 수밖에 없었다."
+    play sound bell_low
+    show effect flash-white
+    stop sound
+    "빛이 번쩍이자 바깥의 발소리가 멎었다. 그리고 주막 안쪽 어딘가에서— 누군가, 웃었다."
+    jump scene_prologue_end
+
+label scene_prologue_end:
+    scene bg abandoned_inn with fade
+    "웃음은 곧 눈발 속으로 스며들었다."
+    이현 serious "서하야, 오늘 밤은 여기서 버틴다."
+    서하 numb "끝난 게 아니에요. 다만... 아직 다음 문이 열리지 않았을 뿐이에요."
+    "나는 꺼져 가는 등잔을 지켰다. 문밖의 발소리는 멎었지만, 질문은 아직 방 안에 남아 있었다."

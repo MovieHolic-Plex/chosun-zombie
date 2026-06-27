@@ -127,6 +127,17 @@ export function parseLineCommand(
     };
   }
 
+  if (trimmed.startsWith('cinematic ')) {
+    const hint = splitTransitionHint(trimmed);
+    return {
+      type: 'cinematic',
+      rawLine,
+      lineNum,
+      cgId: hint.body.substring(10).trim(),
+      transition: hint.transition
+    };
+  }
+
   if (trimmed.startsWith('show char ')) {
     const transitionHint = splitTransitionHint(trimmed);
     const positionHint = splitPositionHint(transitionHint.body);
